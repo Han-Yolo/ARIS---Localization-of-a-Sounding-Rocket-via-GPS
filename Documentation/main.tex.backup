@@ -1,0 +1,127 @@
+\documentclass[    
+    paper=a4,
+    %landscape,
+    %twocolumn,
+    twoside=false,
+    %BCOR=10mm,
+    12pt,
+    pagesize=auto,
+    parskip=half,
+    headsepline=true,
+    numbers=noenddot, % enddot, noenddot
+    draft=false
+]{report}
+
+%-------------------------------------------------------
+% Graphics
+%-------------------------------------------------------
+% For \includegraphics{}
+\usepackage[pdftex]{graphicx}
+\usepackage{subfigure}
+
+% Set Path for Pictures
+\graphicspath{{Images/}}
+
+% include PDFs
+\usepackage{pdfpages}
+
+%-------------------------------------------------------
+% Tables
+%-------------------------------------------------------
+\usepackage{csvsimple}
+%\usepackage[table,xcdraw]{xcolor}
+
+%-------------------------------------------------------
+% Maths
+%-------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{siunitx}
+
+%-------------------------------------------------------
+% Code
+%-------------------------------------------------------
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+%-------------------------------------------------------
+% Font
+%-------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[top=5cm, bottom=4cm, left=3cm, right=3cm]{geometry}
+
+%-------------------------------------------------------
+% Spelling
+%-------------------------------------------------------
+\usepackage[english]{babel}
+
+%-------------------------------------------------------
+% Bibliography
+%-------------------------------------------------------
+\usepackage[noadjust]{cite}
+\bibliographystyle{IEEEtran}
+
+%-------------------------------------------------------
+% Appendix
+%-------------------------------------------------------
+\usepackage[toc,page]{appendix}
+
+%-------------------------------------------------------
+% Header
+%-------------------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\leftmark}
+\rhead{\thepage}
+
+%-------------------------------------------------------
+% Reference
+%-------------------------------------------------------
+\usepackage{hyperref}
+
+%-------------------------------------------------------
+% Caption
+%-------------------------------------------------------
+\usepackage{caption}
+
+%-------------------------------------------------------
+% Parameter
+%-------------------------------------------------------
+\title{Design Automation Conference Sumo Robot}
+\author{Simon Herzog}
+\date{\today}
+
+
+\begin{document}
+ 
+ % Start with roman page numbering and reset counter
+ \setcounter{page}{1}
+ \pagenumbering{roman}
+ 
+ \input{Titlepage} 
+
+ \input{Declaration}
+ 
+ \input{Abstract}
+ 
+ \tableofcontents
+ 
+ \newpage
+ 
+ % Start with arabic page numbering and reset counter
+ \setcounter{page}{1}
+ \pagenumbering{arabic}
+
+ \input{Introduction}
+ 
+ \input{}
+ 
+ \bibliography{literatur}
+ 
+ \begin{appendices}
+  
+  
+  
+ \end{appendices}
+ 
+\end{document}
