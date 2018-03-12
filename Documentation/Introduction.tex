@@ -2,4 +2,18 @@
 
 \section{Requirements}
 
-\cite{misra2011global}
+\subsubsection{Scoring (1000 points possible)}
+\begin{itemize}
+ \item Delivery of Entry Form: 60 points - 6\%
+ \item Technical Report: 200 points - 20\%
+ \item Design Implementation: 240 points - 24\%
+ \item Flight Performance: 500 points - 50\%
+\end{itemize}
+
+
+Flight performance is split into apogee relative to the target apogee(350 points) and successful recovery(150 points).
+\par
+Calculation of apogee points:
+$$ Points = 350 - \left( \frac{350}{0.3 \times Apogee_{Target}} \right) \times \abs{Apogee_{Target} - Apogee_{Actual}} $$
+$Apogee_{Target} = 3000m$ \\
+1\% points $\widehat{=}$ 9m deviation
