@@ -18,18 +18,19 @@
  
  \item The differnce between the calculated distance and the measuren pseudorange is calculated for each satellite.
  
- \item The range differnces are sent to the rocket over the RF-link. 
+ \item RTCM 2.3 meassage 1 and 3 are created with the pseudorenge corrections.
+ 
+ \item The RTCM messages are sent to the rocket over the RF-link. 
  The update rate of the corrections could be about 1Hz.
  
- \item On the rocket, the pseudorenge measurements are corrected with the latest differential corrections and a tropospheric model. 
- The tropospheric corrections are zero at the launchpad and get bigger with altitude.
+ \item On the rocket, the messages are fed into the UART interface of the GPS receiver which includes them in the position estimation.
  
- \item The rocket position is then calculated with the corrected pseudoranges.
+ \item Tropospheric corrections could be added to the pseudorange corrections at the ground station or in the rocket.
  
  \item The first correction is sent when the rocket is still on the launch pad.
  One or more corrected measurements at the launch pad serve as the zero point of the trajectory.
  
- \item The calculated position measurements during the flight can be differnced with the launch pad zero point to get the relative position to the launch pad.
+ \item The position estimations during the flight can be differnced with the launch pad zero point to get the relative position to the launch pad.
  With this the reference position bias cancels out.
  For the rocket controll and the post processing, the relative position to the launchpad is more relevant.
  The absolute position, where the reference positon bias is still present, is only needed for the recovery of the rocket where accuracy is not as important.
