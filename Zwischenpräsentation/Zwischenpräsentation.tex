@@ -211,7 +211,8 @@
 \end{frame}
 
 \begin{frame}{DGPS Message Generator}
- \begin{minipage}{0.6\textwidth}
+ \begin{columns}
+  \column{0.6\textwidth}
   \begin{itemize}
    \setlength\itemsep{0.3cm}
    \item Receive UBX messages
@@ -222,24 +223,27 @@
    \item Encode RTCM messages
    \item Send RTCM messages
   \end{itemize}
- \end{minipage}
- \begin{minipage}{0.35\textwidth}
-  \includegraphics[width=\textwidth]{images/DGPS_Message_Generator_GUI.png}
- \end{minipage}
+  
+  \column{0.35\textwidth}
+  \begin{figure}
+   \includegraphics[width=\textwidth]{images/DGPS_Message_Generator_GUI.png}
+  \end{figure}
+  
+ \end{columns}
 \end{frame}
 
 \begin{frame}{Software Architecture}
- 
+ \includegraphics[width=\textwidth]{images/Software_Architecture.png}
 \end{frame}
 
-\begin{frame}{Testing}
+\begin{frame}{Tests}
  \begin{itemize}
   \item Static Accuracy
   \item Mobile Accuracy
   \item Rover / Reference Station Distance
-  \item Height Difference \\[10pt]
+  \item Height Difference \\[15pt]
   \item Antenna Rotation
-  \item Correction Message Interruption \\[10pt]
+  \item Correction Message Interruption \\[15pt]
   \item Rocket Launch
  \end{itemize}
 \end{frame}
