@@ -175,10 +175,10 @@ order=2
 
 [item:Testing.tex]
 archive=true
-column=46
+column=51
 encoding=UTF-8
 highlight=LaTeX
-line=19
+line=34
 mode=LaTeX
 open=true
 order=1
@@ -266,10 +266,10 @@ JumpList=
 ViMarks=.,18,15,[,18,3,],18,15
 
 [view-settings,view=0,item:Testing.tex]
-CursorColumn=46
-CursorLine=19
+CursorColumn=51
+CursorLine=34
 JumpList=
-ViMarks=.,19,45,[,19,42,],19,45
+ViMarks=.,34,51,[,34,51,],34,51
 
 [view-settings,view=0,item:Titlepage.tex]
 CursorColumn=66

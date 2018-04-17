@@ -66,7 +66,7 @@
 \end{frame}
 
 
-\section{GPS Concept and Errors}
+\section{GPS Concept}
 
 \begin{frame}{GPS Overview}
   \begin{columns}
@@ -107,6 +107,9 @@
 \begin{frame}{Position Estimation}
  \includegraphics[width=\textwidth]{images/Position_Estimation.png}
 \end{frame}
+
+
+\section{Errors Sources}
 
 \begin{frame}{Satellite Errors}
  \begin{columns}
@@ -165,6 +168,7 @@
    \item Carrier-Phase Measurements
    \item Differential GPS
    \item Real Time Kinematic
+   \item Dual Frequency Measurements
    \item SBAS
   \end{itemize}
 
@@ -182,28 +186,61 @@
 \section{DGPS Concept for a Sounding Rocket}
 
 \begin{frame}{Concept}
- 
+ \begin{columns}
+  \column{0.5\textwidth}
+  \begin{itemize}
+   \footnotesize
+   \item Position of RS is known
+   \item RS receives satellite epehemeris data
+   \item Distance between RS and satellite is calculated
+   \item Pseudorange between RS and satellite is measured
+   \item Range error of every visible satellite is sent to rocket
+   \item Receiver on rocket includes corrections in position estimation
+  \end{itemize}
+
+  \column{0.5\textwidth}
+  \begin{figure}
+   \includegraphics[width=\textwidth]{images/DGPS_Rocket_Concept.png}
+  \end{figure}   
+  
+ \end{columns}
 \end{frame}
 
 \begin{frame}{System Overview}
- 
+ \includegraphics[width=\textwidth]{images/DGPS_System_Overview.png}
 \end{frame}
 
-\begin{frame}{Ground Station}
- 
+\begin{frame}{DGPS Message Generator}
+ \begin{minipage}{0.6\textwidth}
+  \begin{itemize}
+   \setlength\itemsep{0.3cm}
+   \item Receive UBX messages
+   \item Set reference positon
+   \item Decode ephemeris data
+   \item Calculate satellite position
+   \item Calculate pseudorange error
+   \item Encode RTCM messages
+   \item Send RTCM messages
+  \end{itemize}
+ \end{minipage}
+ \begin{minipage}{0.35\textwidth}
+  \includegraphics[width=\textwidth]{images/DGPS_Message_Generator_GUI.png}
+ \end{minipage}
 \end{frame}
 
 \begin{frame}{Software Architecture}
  
 \end{frame}
 
-
-\section{ToDo}
-
-\begin{frame}{ToDo}
+\begin{frame}{Testing}
  \begin{itemize}
-  \setlength\itemsep{0.5cm}
-  \item Tests
+  \item Static Accuracy
+  \item Mobile Accuracy
+  \item Rover / Reference Station Distance
+  \item Height Difference \\[10pt]
+  \item Antenna Rotation
+  \item Correction Message Interruption \\[10pt]
+  \item Rocket Launch
  \end{itemize}
 \end{frame}
 
