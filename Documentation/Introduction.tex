@@ -1,8 +1,19 @@
 \chapter{Introduction}
 
-\section{Requirements}
+Global Navigation Satellite Systems, GNSS for short, are uesd in a wide variety of applications nowadays.
+The most prominent and oldest of which is GPS.
+It started as a military and maritime navigation aid, but is now used extensively in civil applications.
+This paper evaluates the use of GPS for the localization of a sounding rocket.
 
-\subsubsection{Scoring (1000 points possible)}
+\section{Framework}
+
+The need for such a project originated form ARIS, the Swiss Space Initiative or Akademische Raumfahrt Initiative Schweiz in german.
+ARIS was founded in 2017 by students from the ETH Zürich.
+Now, over 40 students from the ETH Zürich and the universities of applied sciences in Luzern (HSLU) and Zürich (ZHAW) work on its inaugural project.
+The goal of project TELL is to build a sounding rocket to compete in the Spaceport America Cup in New Mexico.
+More than 100 student teams compete there to launch a 4kg payload with a sounding rocket to a target altitude of 10000 feet or about 3km \cite{aris}.
+A maximum score of 1000 points can be reached.
+The points are distributed as follows:
 \begin{itemize}
  \item Delivery of Entry Form: 60 points - 6\%
  \item Technical Report: 200 points - 20\%
@@ -10,10 +21,23 @@
  \item Flight Performance: 500 points - 50\%
 \end{itemize}
 
-
-Flight performance is split into apogee relative to the target apogee(350 points) and successful recovery(150 points).
-\par
-Calculation of apogee points:
+Points for flight performance are split between apogee relative to the target apogee (350 points) and successful recovery (150 points) \cite{sac_rules2017}.
+The points for apogee precision are calculated with this formula:
 $$ Points = 350 - \left( \frac{350}{0.3 \times Apogee_{Target}} \right) \times \abs{Apogee_{Target} - Apogee_{Actual}} $$
-$Apogee_{Target} = 3000m$ \\
+$$ \text{with } Apogee_{Target} = 3000m$$ \\
+
+For project TELL, GPS positioning is used to locate and recover the rocket.
+In project TELL, the rocket motor is dimensioned to overshoot and airbrakes are used to reduce the apogee to the target.
+In the air
+
 1\% less points (3.5 points) $\widehat{=}$ 9m deviation
+
+
+\section{Task Decsription}
+
+\section{Requirements}
+
+\subsubsection{Scoring (1000 points possible)}
+
+
+
