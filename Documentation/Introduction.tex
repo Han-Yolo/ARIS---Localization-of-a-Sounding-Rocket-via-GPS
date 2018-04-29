@@ -3,15 +3,17 @@
 Global Navigation Satellite Systems, GNSS for short, are uesd in a wide variety of applications nowadays.
 The most prominent and oldest of which is GPS.
 It started as a military and maritime navigation aid, but is now used extensively in civil applications.
-This paper evaluates the use of GPS for the localization of a sounding rocket.
+This thesis evaluates the use of GPS for the localization of a sounding rocket.
 
 \section{Framework}
 
 The need for such a project originated form ARIS, the Swiss Space Initiative or Akademische Raumfahrt Initiative Schweiz in german.
-ARIS was founded in 2017 by students from the ETH Zürich.
-Now, over 40 students from the ETH Zürich and the universities of applied sciences in Luzern (HSLU) and Zürich (ZHAW) work on its inaugural project.
-The goal of project TELL is to build a sounding rocket to compete in the Spaceport America Cup in New Mexico.
-More than 100 student teams compete there to launch a 4kg payload with a sounding rocket to a target altitude of 10000 feet or about 3km \cite{aris}.
+ARIS was founded in 2017 by students from the ETH Z\"urich.
+Now, over 40 students from the ETH Z\"urich and the universities of applied sciences in Luzern (HSLU) and Zu\"urich (ZHAW) work on its inaugural project which is called TELL.
+The goal of project TELL is to build a sounding rocket to compete in the 2018 Spaceport America Cup in New Mexico.
+More than 100 student teams compete there to launch a 4kg payload with a sounding rocket to a target altitude of 10000 feet or about 3km. \cite{aris}
+
+A jury distributes points for achievements in the competition itself and the planning, engineering and documentation that went into the project.
 A maximum score of 1000 points can be reached.
 The points are distributed as follows:
 \begin{itemize}
@@ -21,16 +23,27 @@ The points are distributed as follows:
  \item Flight Performance: 500 points - 50\%
 \end{itemize}
 
-Points for flight performance are split between apogee relative to the target apogee (350 points) and successful recovery (150 points) \cite{sac_rules2017}.
+Points for flight performance are split between reached apogee relative to the target apogee (350 points) and successful recovery (150 points).
 The points for apogee precision are calculated with this formula:
 $$ Points = 350 - \left( \frac{350}{0.3 \times Apogee_{Target}} \right) \times \abs{Apogee_{Target} - Apogee_{Actual}} $$
-$$ \text{with } Apogee_{Target} = 3000m$$ \\
+$$ \text{with } Apogee_{Target} = 3048m(10000feet)$$ 
 
-For project TELL, GPS positioning is used to locate and recover the rocket.
-In project TELL, the rocket motor is dimensioned to overshoot and airbrakes are used to reduce the apogee to the target.
-In the air
+With that equation, a deviation of about 9 meters from the target apogee results in a loss of 1\% (3.5 points) of possible points for a correct apogee. \cite{sac_rules2017}
 
-1\% less points (3.5 points) $\widehat{=}$ 9m deviation
+For project TELL, the rocket motor is dimensioned to overshoot the target apogee and airbrakes are used to reduce the apogee to the target.
+A controll loop is implemented to determine the position of the airbrakes during the accent.
+The position and velocity data for the loop is fused from on-board pressure and acceleration sensors.
+Although GPS is implemented in the rocket, it is only used to locate and recover the rocket after it landed.
+This is because standalone GPS has a vertical error of less than 15 meters for 95\% of the time. \cite{SPS_Performance}
+This is not accurate enouth to be beneficial for the sensor fusion.
+A vertical error of less than 1 meter for 95\% of the time would be needed for it to be feasable.
+With such an accuracy improvement, the GPS position could be fused together with the pressure and accelerometer data.
+The addition of GPS would eseccialy help in reducing the drift introduced by the accelerometer.
+
+
+
+However, it is planned to collect GPS raw data to perform post processing differential GPS to analize the flight.
+
 
 
 \section{Task Decsription}
