@@ -31,26 +31,32 @@ $$ \text{with } Apogee_{Target} = 3048m(10000feet)$$
 With that equation, a deviation of about 9 meters from the target apogee results in a loss of 1\% (3.5 points) of possible points for a correct apogee. \cite{sac_rules2017}
 
 For project TELL, the rocket motor is dimensioned to overshoot the target apogee and airbrakes are used to reduce the apogee to the target.
-A controll loop is implemented to determine the position of the airbrakes during the accent.
+A controll loop is implemented to controll the position of the airbrakes during the accent.
 The position and velocity data for the loop is fused from on-board pressure and acceleration sensors.
 Although GPS is implemented in the rocket, it is only used to locate and recover the rocket after it landed.
 This is because standalone GPS has a vertical error of less than 15 meters for 95\% of the time. \cite{SPS_Performance}
 This is not accurate enouth to be beneficial for the sensor fusion.
 A vertical error of less than 1 meter for 95\% of the time would be needed for it to be feasable.
-With such an accuracy improvement, the GPS position could be fused together with the pressure and accelerometer data.
-The addition of GPS would eseccialy help in reducing the drift introduced by the accelerometer.
-
-
-
-However, it is planned to collect GPS raw data to perform post processing differential GPS to analize the flight.
-
+With such an accuracy improvement, the GPS position could be fused together with the pressure and accelerometer.
+The addition of GPS would especcialy help in reducing the drift introduced by the accelerometer.
+This is the origin of this bachelor thesis.
 
 
 \section{Task Decsription}
 
+In short, the feasability of GPS for the localization of a sounding rocket should be evaluated.
+This should be done on multiple steps.
+First, it has to be determined which internal and external error sources could limit the GPS accuracy.
+This means errors that degrade the GPS signal before it enters the antenna, as well as errors that come from the signal processing.
+A focus should be on potential error sources that are specific to the application in a sounding rocket.
+
+Based on that, methods to mitigate those errors should be found.
+These methods should be feasable to implement in a sounding rocket and enhance the accuracy of the GPS positioning to a level where it is usable for the rocket controll.
+The fasability of one of the methods should be shown with a proof of concept.
+That could be a simulation or a prototype depending on the approach.
+
+
 \section{Requirements}
 
-\subsubsection{Scoring (1000 points possible)}
-
-
-
+To make it possible to integrate the approach into the rocket, a set of requirements is defined.
+Also requirements for the performance of the system are given.
