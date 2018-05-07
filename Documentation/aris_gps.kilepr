@@ -4,7 +4,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.1.3
-lastDocument=Introduction.tex
+lastDocument=DGPS_concept_rocket.tex
 masterDocument=
 name=ARIS_GPS
 pkg_extIsRegExp=false
@@ -122,13 +122,13 @@ order=-1
 
 [item:DGPS_concept_rocket.tex]
 archive=true
-column=24
+column=79
 encoding=UTF-8
 highlight=LaTeX
-line=33
+line=32
 mode=LaTeX
-open=false
-order=2
+open=true
+order=5
 
 [item:DGPS_concepts.tex]
 archive=true
@@ -137,8 +137,8 @@ encoding=UTF-8
 highlight=LaTeX
 line=6
 mode=LaTeX
-open=false
-order=3
+open=true
+order=6
 
 [item:Declaration.tex]
 archive=true
@@ -152,10 +152,10 @@ order=2
 
 [item:GPS_concept.tex]
 archive=true
-column=80
+column=169
 encoding=UTF-8
 highlight=LaTeX
-line=30
+line=53
 mode=LaTeX
 open=true
 order=4
@@ -172,10 +172,10 @@ order=-1
 
 [item:Introduction.tex]
 archive=true
-column=62
+column=22
 encoding=UTF-8
 highlight=LaTeX
-line=61
+line=47
 mode=LaTeX
 open=true
 order=2
@@ -212,20 +212,20 @@ order=-1
 
 [item:literatur.bib]
 archive=true
-column=7
+column=39
 encoding=UTF-8
 highlight=BibTeX
-line=15
+line=37
 mode=BibTeX
 open=true
 order=3
 
 [item:main.tex]
 archive=true
-column=0
+column=56
 encoding=UTF-8
 highlight=LaTeX
-line=62
+line=101
 mode=LaTeX
 open=true
 order=0
@@ -243,10 +243,10 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:DGPS_concept_rocket.tex]
-CursorColumn=24
-CursorLine=33
+CursorColumn=79
+CursorLine=32
 JumpList=
-ViMarks=.,32,11,[,32,11,],32,11
+ViMarks=.,32,68,[,32,62,],32,68
 
 [view-settings,view=0,item:DGPS_concepts.tex]
 CursorColumn=21
@@ -261,10 +261,10 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:GPS_concept.tex]
-CursorColumn=80
-CursorLine=30
+CursorColumn=169
+CursorLine=53
 JumpList=
-ViMarks=.,30,79,[,30,64,],30,79
+ViMarks=.,53,154,[,53,154,],53,168
 
 [view-settings,view=0,item:Implementation.tex]
 CursorColumn=0
@@ -273,10 +273,10 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:Introduction.tex]
-CursorColumn=62
-CursorLine=61
+CursorColumn=22
+CursorLine=47
 JumpList=
-ViMarks=.,61,61,[,61,45,],61,61
+ViMarks=.,47,21,[,47,20,],47,21
 
 [view-settings,view=0,item:Testing.tex]
 CursorColumn=51
@@ -291,13 +291,13 @@ JumpList=
 ViMarks=.,41,16,[,41,16,],41,16,a,41,0
 
 [view-settings,view=0,item:literatur.bib]
-CursorColumn=7
-CursorLine=15
+CursorColumn=39
+CursorLine=37
 JumpList=
-ViMarks=.,15,6,[,15,1,],15,6
+ViMarks=.,37,38,[,37,18,],37,38
 
 [view-settings,view=0,item:main.tex]
-CursorColumn=0
-CursorLine=62
+CursorColumn=56
+CursorLine=101
 JumpList=
-ViMarks=.,82,25,[,82,24,],82,25
+ViMarks=.,99,12,[,99,12,],99,12

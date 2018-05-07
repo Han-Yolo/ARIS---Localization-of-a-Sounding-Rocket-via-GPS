@@ -1,4 +1,46 @@
-\chapter{Differential GPS concept for a sounding rocket}
+\chapter{GPS concept for a sounding rocket}
+
+The challenge of reaching a GPS accuracy of 1 meter on a sounding rocket consists mainly of two parts.
+First, the GPS receiver on the rocket has to be able to get a fix.
+This is not a given because of the extreme conditions the receiver experiences during the flight.
+Section \ref{Special_conditions} investigates this challenge.
+Secondly, the GPS accuracy has to be improved.
+The important part here is the vertical accuracy, because this is the value used by the controll to reach the right apogee.
+Standard GPS is only accurate to 15 meters for 95\% of the time in the vertical axis.
+A significant improvement is needed to satisfie the accuracy reqiurement stated in section \ref{Requirements}.
+
+
+\section{Special conditions}\label{Special_conditions}
+
+The conditions on a rocket are unlike anything most GPS receivers will ever experience.
+The acceleration, velocity and height are the three main parameter that could exceed the operating range of a COTS receiver.
+There could either be a technical or legal limit to those parameters.
+
+Apart from that, there is also vibration and rotation present on the rocket.
+Vibration should not be a problen for a GPS receiver apart from the mechanical stress on the electronics.
+Sounding rockets often have a spin during accent to stabilize the flight path.
+This rotation can have an effect on how the receiver antenna receives a signal.
+There is a problem called the wind-up effect, where an error occures when the receiver antenna is rotated relative to the satellite antenna.
+This error only affects carrier phase measurements and not pseudoranges.
+One full rotation results in an error in the phase measurement of one wavelength, which is about 20cm for the GPS L1 carrier \cite{Wind_up}. 
+So only system with carrier phase measurements would need to correct for this error if the rotation reults in a too large error.
+Apart from that, the receiver could experience fading of the GPS signals because of rotation.
+This could happen if a satellite elevation relative to the antenna changes during the rotation and the antenna gain is not constant in this area.
+It will have to be tested how a receiver behaves in such a situation.
+
+Another internal problem could come from the telemetry transmitter.
+If they are positioned close together, the telemetry antenna could interfere with the GPS antenna.
+The GPS signal when it reaches the surface of the earth has a signal strength of about -125dBm.
+
+\section{Decision on accuray enhancement concept}
+
+\section{System Overview}
+
+\section{Data Flow}
+
+\section{Potential problems}
+
+
 
 \subsubsection{Setup:}
 \begin{itemize}

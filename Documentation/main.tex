@@ -93,6 +93,13 @@
 \usepackage{caption}
 
 %-------------------------------------------------------
+% Roman Numbers
+%------------------------------------------------------
+\makeatletter
+\newcommand*{\rom}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+
+%-------------------------------------------------------
 % Parameter
 %-------------------------------------------------------
 \title{ARIS - Localization of a Sounding Rocket via GPS}
