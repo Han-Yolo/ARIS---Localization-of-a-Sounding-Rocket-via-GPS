@@ -61,13 +61,32 @@ The GALILEO constellation is not yet complete with 14 usable satellites at the m
 Beside real global navigation systems, there are also local programs which improve the regional accuracy.
 They consist of satellites in geostationary or geosynchronous orbits.
 This gives them a constant location above the earth or within a few degreees of longitude.
-Such systems are the Chinese BeiDou, the Japanese QZSS and the Indian IRNSS.
+Such systems are the Japanese QZSS and the Indian IRNSS.
+The Chinese BeiDou system is a combination of global and regional.
+It started with just geostationary and geosynchronous satellites over China, but now has three operational global satellites with more to come.
 
 
 \subsection{Functional Principle}
 
 All modern GNSS work with the principle of trilateration.
+For this method of postitoning, the distance to three known lacations is needed to calculate the own position in three dimensions.
+With radio waves, the distance to a transmitting station can be measured trough the propagation time of the wave.
+The distance is calculated when the propagation speed is divided by the propagation time.
+Ground based systems can only solve for the position on a two dimensional plane because they are limited in transmitter height above the surface of the earth.
+A space-based system can also solve for height with transmitters distributed in all three dimensions.
 
+GNSS achieve this with satellites as transmission stations.
+GPS satellites are in medium earth orbit at an altitude of about 20'200km with each satellite circling the earth twice a day.
+The orbits of GLONASS are a bit lower and GALILEO a bit higher.
+
+\begin{figure}[ht]
+ \centering
+ \includegraphics[height=5cm]{images/constellation.jpg}
+ \caption{GPS satellite constellation \cite{GPS_GOV}}
+\end{figure}
+
+
+ 
 \subsection{Signals}
 
 \subsection{Performance}
@@ -75,3 +94,8 @@ All modern GNSS work with the principle of trilateration.
 
 \section{Error Sources}
 
+\subsection{Satellite Errors}
+
+\subsection{Signal Propagation Errors}
+
+\subsection{Receiver Errors}

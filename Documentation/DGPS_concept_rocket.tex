@@ -1,20 +1,21 @@
-\chapter{GPS concept for a sounding rocket}
+\chapter{GPS Concept for a Sounding Rocket}
 
 The challenge of reaching a GPS accuracy of 1 meter on a sounding rocket consists mainly of two parts.
-First, the GPS receiver on the rocket has to be able to get a fix.
+First, the GPS receiver on the rocket has to be able to get a position fix.
 This is not a given because of the extreme conditions the receiver experiences during the flight.
 Section \ref{Special_conditions} investigates this challenge.
 Secondly, the GPS accuracy has to be improved.
 The important part here is the vertical accuracy, because this is the value used by the controll to reach the right apogee.
 Standard GPS is only accurate to 15 meters for 95\% of the time in the vertical axis.
-A significant improvement is needed to satisfie the accuracy reqiurement stated in section \ref{Requirements}.
+A significant improvement is needed to satisfie the accuracy reqiurement of 1 meter stated in section \ref{Requirements}.
 
 
-\section{Special conditions}\label{Special_conditions}
+\section{Special Conditions}\label{Special_conditions}
 
 The conditions on a rocket are unlike anything most GPS receivers will ever experience.
 The acceleration, velocity and height are the three main parameter that could exceed the operating range of a COTS receiver.
 There could either be a technical or legal limit to those parameters.
+A receiver as to be picked or tested for these requirements.
 
 Apart from that, there is also vibration and rotation present on the rocket.
 Vibration should not be a problen for a GPS receiver apart from the mechanical stress on the electronics.
@@ -28,17 +29,22 @@ Apart from that, the receiver could experience fading of the GPS signals because
 This could happen if a satellite elevation relative to the antenna changes during the rotation and the antenna gain is not constant in this area.
 It will have to be tested how a receiver behaves in such a situation.
 
-Another internal problem could come from the telemetry transmitter.
-If they are positioned close together, the telemetry antenna could interfere with the GPS antenna.
-The GPS signal when it reaches the surface of the earth has a signal strength of about -125dBm.
+Another problem could come from internal interference.
+Especially from the telemetry transmitter with its relatively high power.
+The GPS signal, when it reaches the surface of the earth, has a signal strength of about -125dBm.
+To pick up such a weak signal, GPS antennas need a high gain and the receivers a high sensitivity.
+This increases the risk of interference from a transmitter close by even if it transmitts on a different frequency band.
+Interference can cause the \textit{carrier-to-noise densitiy} to shrink to the point that tracking of the GPS signals is lost.
+Tests are needed to evaluate the influence of other elecrtonical components in the rocket on the GPS antenna and receiver.
+The influence of relatively high power sources like the telemetry transmitter should first be calculated as far as possible to minimize the risk of damaging the GPS receiver.
 
-\section{Decision on accuray enhancement concept}
+\section{Accuray Enhancement Concept}
 
 \section{System Overview}
 
 \section{Data Flow}
 
-\section{Potential problems}
+\section{Potential Problems}
 
 
 
