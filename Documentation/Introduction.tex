@@ -72,5 +72,25 @@ That could be a simulation or a prototype depending on the approach.
 
 \section{Requirements}\label{Requirements}
 
-To make it possible to integrate the approach into the rocket, a set of requirements is defined.
-Also requirements for the performance of the system are given.
+There are two different classes of requirements.
+One is to define the performance the system should achieve.
+The other is to make it possible to integrate the system into the rocket in terms of interfaces and infrastructure.
+
+The main parameter to rate the performance of a positioning system is the accuracy.
+The accuracy consists of two components, the variance and the bias.
+Two metrics that are used often are the 95th precentile and the root-mean-square error (RMSE).
+The accuracy reqirement for the sounding rocket GPS is:
+$$ RMSE \le 1m $$
+
+Another metric is the integrity of the system.
+This could be a problem especially during the burn of the rocket because of the high acceleration.
+For the GPS system to be useful for the competition, it is not vital to have a GPS fix during the burn.
+But the rocket should have a fix soon after the burnout to have enough time to correct the flight path before the apogee is reached.
+The requirement is:
+$$ \textit{GPS fix max. 2 seconds after burnout} $$
+
+In project Tell, a telemetry link is implemented.
+This link is mainly a downlink from the rocket to the ground station, but there is the option to add an uplink without much effort.
+Such an uplink could potentially be used by the GPS system.
+The limitation of the uplink bandwidth for a GPS system is:
+$$ \textit{Uplink bandwidth max. 2kbit/s} $$
