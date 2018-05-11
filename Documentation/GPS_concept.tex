@@ -70,30 +70,49 @@ It started with just geostationary and geosynchronous satellites over China, but
 
 \section{GPS}
 
-This section explains the 
+This section closer explains the system architecture, functional principle and performance of GPS.
+The difference to the ohter GNSS is minor.
+Orbits, frequencys and signal modulation are slightly different between the systems, but the basic architecture is the same.
 
-\subsection{Functional Principle}
 
-All modern GNSS work with the principle of trilateration.
-For this method of postitoning, the distance to three known lacations is needed to calculate the own position in three dimensions.
-With radio waves, the distance to a transmitting station can be measured trough the propagation time of the wave.
-The distance is calculated when the propagation speed is divided by the propagation time.
-Ground based systems can only solve for the position on a two dimensional plane because they are limited in transmitter height above the surface of the earth.
-A space-based system can also solve for height with transmitters distributed in all three dimensions.
+\section{System Architecture}
 
-This is achieved with satellites as transmission stations.
+The GPS system can be split into three segments.
+The Space Segment includes the satellites, the Control Segment is the ground equipment that manages the satellites and the User Segment are the receivers.
+
+\subsubsection{Space Segment}
+
+A full GPS constellation consists of 24 satellites as shown in figure \ref{constellation}.
+Currently, there are 31 GPS satellites in operation.
 GPS satellites are in medium earth orbit at an altitude of about 20'200km with each satellite circling the earth twice a day.
-The orbits of GLONASS are a bit lower and GALILEO a bit higher.
+About 8 satellites are visible to a user at a time.
 
 \begin{figure}[ht]
  \centering
  \includegraphics[height=5cm]{images/constellation.jpg}
  \caption{GPS satellite constellation \cite{GPS_GOV}}
+ \label{constellation}
 \end{figure}
 
+\subsubsection{Control Segment}
 
- 
-\subsection{Signals}
+\subsubsection{User Segment}
+
+
+\subsection{Functional Principle}
+
+GPS works with the principle of trilateration.
+For this method of postitoning, the distance to three known lacations is needed to calculate the own position in three dimensions.
+With radio waves, the distance to a transmitting station can be calculated with the measured propagation time and the known propagation speed of the wave.
+Ground based systems can only solve for the position on a two dimensional plane because they are limited in transmitter height above the surface of the earth.
+A space-based system can also solve for height with transmitters distributed in all three dimensions.
+
+\begin{figure}[ht]
+ \centering
+ \includegraphics[width=0.8\textwidth]{images/Position_Estimation.png}
+ \caption{GPS triangulation}
+\end{figure}
+
 
 \subsection{Performance}
 
