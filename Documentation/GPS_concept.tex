@@ -84,7 +84,7 @@ The Space Segment includes the satellites, the Control Segment is the ground equ
 
 A full GPS constellation consists of 24 satellites as shown in figure \ref{constellation}.
 Currently, there are 31 GPS satellites in operation.
-GPS satellites are in medium earth orbit at an altitude of about 20'200km with each satellite circling the earth twice a day.
+They are in medium earth orbit at an altitude of about 20'200km with each satellite circling the earth twice a day.
 About 8 satellites are visible to a user at a time.
 
 \begin{figure}[ht]
@@ -96,7 +96,20 @@ About 8 satellites are visible to a user at a time.
 
 \subsubsection{Control Segment}
 
+To ensure an accurate positioning service for GPS users, the satellites have to be constantely monitored and maintained.
+This is the job of the Control Segment.
+It monitors satellite orbits and time to predict satellite ephemerides and clock parameters.
+It then updates the satellite navigation data, which is later sent from the satellite to the user.
+If neccesary, the Control Segment can order the satellites to performe maneuvers to maintain a correct orbit or to relocate to another orbit.
+The Control Segment comprises of a network of ground based stations spread arround the globe.
+This network is coordinated by the Master Controll Station in the U.S. state of Colorado.
+
 \subsubsection{User Segment}
+
+Finally, the User Segment is where the satellite signals are picked up and the position of the user is calcuated.
+Unlike the other segments, the User Segment is not developed by the U.S. Government, apart from military receivers.
+The design of civil GPS receivers is left to market forces.
+The size of those receivers droped dramatically during the lifetime of GPS from the size of a backpack, to the size of a single microchip.
 
 
 \subsection{Functional Principle}
@@ -104,14 +117,16 @@ About 8 satellites are visible to a user at a time.
 GPS works with the principle of trilateration.
 For this method of postitoning, the distance to three known lacations is needed to calculate the own position in three dimensions.
 With radio waves, the distance to a transmitting station can be calculated with the measured propagation time and the known propagation speed of the wave.
-Ground based systems can only solve for the position on a two dimensional plane because they are limited in transmitter height above the surface of the earth.
-A space-based system can also solve for height with transmitters distributed in all three dimensions.
+
 
 \begin{figure}[ht]
  \centering
  \includegraphics[width=0.8\textwidth]{images/Position_Estimation.png}
  \caption{GPS triangulation}
 \end{figure}
+
+Ground based systems can only solve for the position on a two dimensional plane because they are limited in transmitter height above the surface of the earth.
+A space-based system can also solve for height with transmitters distributed in all three dimensions.
 
 
 \subsection{Performance}
