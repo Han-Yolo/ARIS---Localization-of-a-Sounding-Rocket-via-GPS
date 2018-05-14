@@ -82,7 +82,7 @@ The Space Segment includes the satellites, the Control Segment is the ground equ
 
 \subsubsection{Space Segment}
 
-A full GPS constellation consists of 24 satellites as shown in figure \ref{constellation}.
+A full GPS constellation consists of 24 satellites as shown in figure \ref{fig:constellation}.
 Currently, there are 31 GPS satellites in operation.
 They are in medium earth orbit at an altitude of about 20'200km with each satellite circling the earth twice a day.
 About 8 satellites are visible to a user at a time.
@@ -91,7 +91,7 @@ About 8 satellites are visible to a user at a time.
  \centering
  \includegraphics[height=5cm]{images/constellation.jpg}
  \caption{GPS satellite constellation \cite{GPS_GOV}}
- \label{constellation}
+ \label{fig:constellation}
 \end{figure}
 
 \subsubsection{Control Segment}
@@ -116,23 +116,58 @@ The size of those receivers droped dramatically during the lifetime of GPS from 
 
 GPS works with the principle of trilateration.
 For this method of postitoning, the distance to three known lacations is needed to calculate the own position in three dimensions.
-With radio waves, the distance to a transmitting station can be calculated with the measured propagation time and the known propagation speed of the wave.
+This works with basic vector geometry.
+The euclidean distance between two points in three-dimensional space can be calculated with equation \ref{eq:euclidean_dist}.
 
+\begin{equation}
+ r^{(k)} = \sqrt{(x^{(k)} - x)^2 + (y^{(k)} - y)^2 + (z^{(k)} - z)^2} = \lvert\lvert \textbf{x}^{(k)} - \textbf{x} \rvert\rvert		\label{eq:euclidean_dist}
+\end{equation}
+
+For GPS, the two points are the user position $[x, y, z]$ and the satellite position $[x^{(k)}, y^{(k)}, z^{(k)}]$ and the true distance between them is called $r^{(k)}$.
+The satellites are distinguished with the superscript $^{(k)}$ where k stands for the k-th satellite in view.
+In theory, with the position and distance of three satellites, a system of equations could be solved for the three variables of the user position $[x, y, z]$.
+But in practice, a gps receiver needs at least four satellites to estimate its position.
+This is because a fourth variable needs to be solved for, which is the difference between GPS time and user time called $\delta t_u$.
 
 \begin{figure}[ht]
  \centering
  \includegraphics[width=0.8\textwidth]{images/Position_Estimation.png}
  \caption{GPS triangulation}
+ \label{fig:triangulation}
 \end{figure}
 
-Ground based systems can only solve for the position on a two dimensional plane because they are limited in transmitter height above the surface of the earth.
-A space-based system can also solve for height with transmitters distributed in all three dimensions.
+GPS uses the propagation time of radio waves to determine the distance between satellite and user.
+The measured transmision time is multiplied by the speed of light to get the distance in meters.
+This is not the true distance $r^{(k)}$.
+Insted, the so called pseudorange $\rho^{(k)}$ is measured, which contains the true range and a set of errors.
+The relation is shown in equation \ref{eq:pseudorange}.
+The pseudorange contains the clock errors $c[\delta t_u - \delta t^{(k)}]$, the atmospheric errors $I^{(k)} + T^{(k)}$ and the remaining errors $\epsilon^{(k)}$.
+What they mean is closer explained in section \ref{sec:error_sources}.
 
+\begin{equation}
+ \rho^{(k)} = r^{(k)} + c[\delta t_u - \delta t^{(k)}] + I^{(k)} + T^{(k)} + \epsilon^{(k)}		\label{eq:pseudorange}
+\end{equation}
+
+Important here is the user clock error $\delta t_u$.
+The reason for this error is the unprecise clock in the receiver.
+The satellites have atomic clocks which are synchorinized to GPS time.
+It is not feasable to build an atomic clocks into every receiver and keep it synchorinized to GPS time.
+Insted, the difference between receiver time and GPS time is solved for with the measurement from a fourth satellite.
+This is possible because the user clock error is common in the pseudoranges from all satellites.
+
+\subsection{Signals}
+
+A GPS receiver can work with only the information included in the signals from the satellites.
+This means the information for distance and satellite position have to be transmitted with those signals.
+GPS solves this problem with a three-layered signal shown in figure \ref{}.
+
+The carrier is a sinusoidal signal in the L band.
+Most civil GPS receivers work with the L1 signal at 1575.42MHz.
 
 \subsection{Performance}
 
 
-\section{Error Sources}
+\section{Error Sources}\label{sec:error_sources}
 
 \subsection{Satellite Errors}
 
