@@ -135,7 +135,7 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=15
+line=22
 mode=LaTeX
 open=true
 order=5
@@ -250,9 +250,9 @@ ViMarks=.,42,0,[,42,0,],42,0
 
 [view-settings,view=0,item:DGPS_concepts.tex]
 CursorColumn=0
-CursorLine=15
+CursorLine=22
 JumpList=
-ViMarks=.,15,0,[,16,0,],-1,-1
+ViMarks=.,22,0,[,22,0,],22,0
 
 [view-settings,view=0,item:Declaration.tex]
 CursorColumn=0

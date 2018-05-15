@@ -8,11 +8,18 @@ They are rated by how effective they are at improving the accuracy and how well 
 
 \section{Dual Frequency Measurements}
 
-A relatively new method of error mitigation for civilian GPS are Dual Frequency Measurements.
+A relatively new method of error mitigation for civil GPS users are Dual Frequency Measurements.
 This only became possible with the launch of Block IIR-M and IIF satellites.
 They transmit a second civilian signal on the L2 frequency called L2C.
 The benefit of measuring both the L1 C/A and L2C signal is that the ionospheric delay can be determined.
-The ionosphere has a different effect on signal on different frequencys.
+The ionosphere slows down and radio waves, and thus adds a delay to the measured pseudoranges.
+This delay depends on the frequency of the radio wave.
+With the difference from pseudorange measurement received on different carrier frequencys, the total ionospheric delay can be calculated.
+
+Dual Frequency Measurements can mitigate the ionospheric error, which is one of the biggest error sources, to a large degree.
+This error would otherwise have to be modeled with parameter transmitted by the GPS satellites.
+The modeled correction only reduces the error by about 50\%.
+Used to implement the dual frequency measurements method are a dual frequency receiver and antenna.
 
 
 \section{Carrier-Phase Measurements}
