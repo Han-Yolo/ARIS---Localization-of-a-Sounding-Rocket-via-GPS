@@ -1,4 +1,4 @@
-\chapter{GPS Concept and Error Sources}
+\chapter{GPS Concept and Error Sources}\label{ch:GPS_concept}
 
 Along with earlier navigation systems, this chapter explains the positioning concept of GPS and modern Global Navigation Satellite Systems in general.
 The error sources that impact the accuracy of GPS are listed and split into categories that determine in which segment those errors occur.
@@ -86,6 +86,13 @@ A full GPS constellation consists of 24 satellites as shown in figure \ref{fig:c
 Currently, there are 31 GPS satellites in operation.
 They are in medium earth orbit at an altitude of about 20'200km with each satellite circling the earth twice a day.
 About 8 satellites are visible to a user at a time.
+These satellites are constantly beeing replaced by newer ones with new features.
+The different generations of satellites are divided into Blocks.
+Starting with the first generation of satellites launched from 1978 until 1995 called Block \rom{1}.
+Block \rom{2} satellites had a series of incremental improvements and added new signals over the time they were launced from 1989 until 2016.
+The separate satellite series of the Block \rom{2} generation were called II, IIA, IIR, IIR-M and IIF.
+The first Block \rom{3} launch is scheduled for 2018.
+The third generation adds even more signals and trinsmitts at higher power levels.
 
 \begin{figure}[ht]
  \centering
@@ -177,7 +184,7 @@ A variety of civil and encrypted military signals are modulated onto those carri
 The main signal for civil applications is the C/A-code on L1.
 It consists of the C/A-code itself and a data stream.
 The C/A-code and the data stream are both binary sequences.
-The are first XORed together and then modulated onto the carrier using \textit{binary phase shift keying} (BPSK).
+They are first XORed together and then modulated onto the carrier using \textit{binary phase shift keying} (BPSK).
 
 The C/A-code is a sequence of 1023 bits, which repeats every millisecond and is unique to each satellite.
 The lenght of each bit, or chip in this context, is about $1\mu s$.
@@ -193,6 +200,7 @@ With it, the position of the satellite can be calculates at the desired time.
 The satellite clock error information is used to correct the pseudorange for the term $\delta t^{(k)}$.
 
 \subsection{Performance}
+
 
 
 \section{Error Sources}\label{sec:error_sources}
