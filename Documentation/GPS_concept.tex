@@ -125,9 +125,10 @@ The euclidean distance between two points in three-dimensional space can be calc
 
 For GPS, the two points are the user position $[x, y, z]$ and the satellite position $[x^{(k)}, y^{(k)}, z^{(k)}]$ and the true distance between them is called $r^{(k)}$.
 The satellites are distinguished with the superscript $^{(k)}$ where k stands for the k-th satellite in view.
-In theory, with the position and distance of three satellites, a system of equations could be solved for the three variables of the user position $[x, y, z]$.
+In theory, with the position and distance of three satellites, a system of equations could be constructed and the three variables of the user position $[x, y, z]$ could be estimated.
 But in practice, a gps receiver needs at least four satellites to estimate its position.
-This is because a fourth variable needs to be solved for, which is the difference between GPS time and user time called $\delta t_u$.
+This is because a fourth variable needs to be estimated called $\delta t_u$.
+This is the difference between GPS time and user time.
 
 \begin{figure}[ht]
  \centering
@@ -152,17 +153,44 @@ Important here is the user clock error $\delta t_u$.
 The reason for this error is the unprecise clock in the receiver.
 The satellites have atomic clocks which are synchorinized to GPS time.
 It is not feasable to build an atomic clocks into every receiver and keep it synchorinized to GPS time.
-Insted, the difference between receiver time and GPS time is solved for with the measurement from a fourth satellite.
+Insted, the difference between receiver time and GPS time is estimatet with the measurement from a fourth satellite.
 This is possible because the user clock error is common in the pseudoranges from all satellites.
+The estimation of the four variables $[x, y, z, \delta t_u]$ is either done iteratively with the Least Square method or with a Kalman filter.
 
 \subsection{Signals}
 
 A GPS receiver can work with only the information included in the signals from the satellites.
 This means the information for distance and satellite position have to be transmitted with those signals.
-GPS solves this problem with a three-layered signal shown in figure \ref{}.
+GPS solves this problem with a three-layered signals like the one in figure \ref{fig:signal_structure}.
+
+\begin{figure}[ht]
+ \centering
+ \includegraphics[width=0.8\textwidth]{images/Signal_Structure.png}
+ \caption{C/A-code signal structure (not to scale)}
+ \label{fig:signal_structure}
+\end{figure}
 
 The carrier is a sinusoidal signal in the L band.
 Most civil GPS receivers work with the L1 signal at 1575.42MHz.
+GPS satellites also send on L2 at 1227.6 MHz and newer satellites on L5 at 1176.45 MHz too.
+A variety of civil and encrypted military signals are modulated onto those carriers.
+The main signal for civil applications is the C/A-code on L1.
+It consists of the C/A-code itself and a data stream.
+The C/A-code and the data stream are both binary sequences.
+The are first XORed together and then modulated onto the carrier using \textit{binary phase shift keying} (BPSK).
+
+The C/A-code is a sequence of 1023 bits, which repeats every millisecond and is unique to each satellite.
+The lenght of each bit, or chip in this context, is about $1\mu s$.
+This code is used to measure the signal transmission time.
+The received signal is demodulated and correlated with local copies of the C/A-codes on separate channels.
+The local copy is shifted in time until an autocorrelation peak emerges.
+This timeshift determines the signal transmission time. 
+
+Besides the C/A-code is the data stream that contains the navigation message.
+It has information about the satellite orbit and the satellite clock error.
+The obit data is called ephemeris data.
+With it, the position of the satellite can be calculates at the desired time.
+The satellite clock error information is used to correct the pseudorange for the term $\delta t^{(k)}$.
 
 \subsection{Performance}
 
