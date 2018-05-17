@@ -201,6 +201,29 @@ The satellite clock error information is used to correct the pseudorange for the
 
 \subsection{Performance}
 
+To evaluate the performance of GPS, a number of metrics can be used.
+The most prominent one is of course the accuracy.
+This was already addressed in \ref{sec:requirements}, where the requirements were defined.
+Accuracy can be explained with the two errors variance and bias.
+In GPS, the two errors are often not given separately when the accuracy of the whole system is described.
+Accuracy simply describes how close the measurement matches the real position.
+The two most used metrics to described GPS postitoning accuracy are the 95th precentile and the root-mean-square error (RMSE).
+The 95th precentile describes the border in meters, where 95\% of errors are smaller and 5\% are larger.
+The RMSE equals the variance of $1\sigma$, as long as the mean error is zero.
+A mean error is a bias, that is considered in the RMSE but does not impact the variance.
+RMSE is calculated with:
+$$ RMSE = \sqrt{\frac{\sum\limits_{i=1}^n \lvert\lvert \textbf{x}_{real} - \textbf{x}_{meas} \rvert\rvert^2}{n}} $$
+
+Accuracy can be further divided into horizontal and vertical error.
+The GPS SPS(Standard Positioning Service) Performance Standard defines an average $\leq$9m 95\% horizontal error and a $\leq$15m 95\% vertical error \cite{SPS_Performance}.
+
+Other than accuracy, availability and integrity are two other important metrics.
+The availability is the likelihood a user anywhere on earth can get a GPS fix.
+The GPS SPS Performance Standard defines an average $\geq$99\% locational availability.
+Integrity is how trustworthy the information of the system is.
+This is especially important for safety-of-life applications like airplane navigation.
+GPS constantly monitors itself and informs the user if the data does not meet the requirements.
+This is done with satellite self-monitoring, cross-monitoring between satellites, and ground based monitoring.
 
 
 \section{Error Sources}\label{sec:error_sources}
