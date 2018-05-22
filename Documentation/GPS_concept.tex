@@ -212,14 +212,16 @@ The 95th precentile describes the border in meters, where 95\% of errors are sma
 The RMSE equals the variance of $1\sigma$, as long as the mean error is zero.
 A mean error is a bias, that is considered in the RMSE but does not impact the variance.
 RMSE is calculated with:
-$$ RMSE = \sqrt{\frac{\sum\limits_{i=1}^n \lvert\lvert \textbf{x}_{real} - \textbf{x}_{meas} \rvert\rvert^2}{n}} $$
+\begin{equation}
+ RMSE = \sqrt{\frac{\sum\limits_{i=1}^n \lvert\lvert \textbf{x}_{real} - \textbf{x}_{meas} \rvert\rvert^2}{n}}
+\end{equation}
 
 Accuracy can be further divided into horizontal and vertical error.
 The GPS SPS(Standard Positioning Service) Performance Standard defines an average $\leq$9m 95\% horizontal error and a $\leq$15m 95\% vertical error \cite{SPS_Performance}.
 
 Other than accuracy, availability and integrity are two other important metrics.
 The availability is the likelihood a user anywhere on earth can get a GPS fix.
-The GPS SPS Performance Standard defines an average $\geq$99\% locational availability.
+The GPS SPS Performance Standard defines an average $\geq$99\% locational availability \cite{SPS_Performance}.
 Integrity is how trustworthy the information of the system is.
 This is especially important for safety-of-life applications like airplane navigation.
 GPS constantly monitors itself and informs the user if the data does not meet the requirements.
@@ -228,8 +230,29 @@ This is done with satellite self-monitoring, cross-monitoring between satellites
 
 \section{Error Sources}\label{sec:error_sources}
 
+The error in the GPS position is determined by two Factors.
+The reason there is a position error at all are the errors in the measured distances to the satellites called User Range Error (URE).
+These errors are further divided into three groups depending on where they occure.
+Errors in the parameters broadcasted by the satellites are here called satellite errors.
+Errors that occure in the signal path from the satellite to the receiver are called signal propagation errors.
+Finally, errors that are caused by unprecise measurenents of the signals by the receiver are called measurement errors.
+All three types are discussed later in this section.
+
+The other factor is the satellite geometry.
+It determines how much the URE impacts the positioning accuracy.
+An optimal geometry would be stellites evenly distributed in all three dimensions.
+This is not possible because a receiver on the surface of the earth can not receive signals from satellites blocked by the earth.
+A metric to determine the geometry quality is the Dilution of Precision (DOP).
+Different versions of DOP can be determined like the Horizontal DOP (HDOP), Vertical DOP (VDOP), 3-D Position DOP (PDOP) and Time DOP (TDOP).
+The RMS position error can then be calculated with the variance of the URE ($\sigma^2$), and the corresponding DOP.
+For example, the horizontal RMS position error can be calcuated with:
+\begin{equation}
+ RMS \text{(horizontal position error)} = \sigma \cdot HDOP
+\end{equation}
+
+
 \subsection{Satellite Errors}
 
 \subsection{Signal Propagation Errors}
 
-\subsection{Receiver Errors}
+\subsection{Measurement Errors}
