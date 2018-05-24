@@ -24,6 +24,30 @@ Used to implement the dual frequency measurements method are a dual frequency re
 
 \section{Carrier-Phase Measurements}
 
+In standard GPS receivers, the C/A-code is tracked to determine the pseudorange.
+The C/A-code is sent out with 1023kbit/s, so each chip is about 300m long.
+It is modulated onto the sinusoidal L1-carrier with a frequency of 1575.43MHz.
+One period of this carrier is only about 19cm long.
+This means the carrier would have a much larger resolution than the C/A-code for tracking.
+Receiver who use this principle measure the carrier-phase.
+The problem with this is the periodical nature of the carrier.
+The phase can be measured very precisely, but it can not be directly measured how many whole cycles are between the user and the satellite.
+This ambiguity has to be resolved in other ways before the carrier-phase measurement can be used, which can take some time.
+After the ambiguity is resolved, the carrier has to be continuously tracked to count the whole cycles.
+With the higher resolution, the tracking error introduced by receiver noise can be reduced.
+
+\begin{figure}[ht]
+ \centering
+ \includegraphics[height=5cm]{images/Carrier-Phase_Measurement.png}
+ \caption{Difference in resolution between C/A-code and L1-carrier}
+ \label{fig:carrier_phase}
+\end{figure}
+
+Carrier-phase measurements also improve multipath.
+The advantage is that reflected signals with a delay of more than a quarter cyrcle do not impact the measurement.
+In the case of the L1-carrier, this is only about 5cm.
+A typical multipath error for C/A-code measurements is 1-5m.
+
 \section{Differential GPS}
 
 \section{Summary}

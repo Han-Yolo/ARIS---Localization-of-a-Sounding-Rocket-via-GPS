@@ -149,11 +149,13 @@ The measured transmision time is multiplied by the speed of light to get the dis
 This is not the true distance $r^{(k)}$.
 Insted, the so called pseudorange $\rho^{(k)}$ is measured, which contains the true range and a set of errors.
 The relation is shown in equation \ref{eq:pseudorange}.
-The pseudorange contains the clock errors $c[\delta t_u - \delta t^{(k)}]$, the atmospheric errors $I^{(k)} + T^{(k)}$ and the remaining errors $\epsilon^{(k)}$.
+The pseudorange contains the clock errors $c[\delta t_u - \delta t^{(k)}]$ and the atmospheric errors $I^{(k)} + T^{(k)}$.
+Those errors can be modeled and estimated to correct the pseudorange.
+All the errors that can not be modeled are combined in the term $\varepsilon^{(k)}$.
 What they mean is closer explained in section \ref{sec:error_sources}.
 
 \begin{equation}
- \rho^{(k)} = r^{(k)} + c[\delta t_u - \delta t^{(k)}] + I^{(k)} + T^{(k)} + \epsilon^{(k)}		\label{eq:pseudorange}
+ \rho^{(k)} = r^{(k)} + c[\delta t_u - \delta t^{(k)}] + I^{(k)} + T^{(k)} + \varepsilon^{(k)}		\label{eq:pseudorange}
 \end{equation}
 
 Important here is the user clock error $\delta t_u$.
@@ -162,7 +164,7 @@ The satellites have atomic clocks which are synchorinized to GPS time.
 It is not feasable to build an atomic clocks into every receiver and keep it synchorinized to GPS time.
 Insted, the difference between receiver time and GPS time is estimatet with the measurement from a fourth satellite.
 This is possible because the user clock error is common in the pseudoranges from all satellites.
-The estimation of the four variables $[x, y, z, \delta t_u]$ is either done iteratively with the Least Square method or with a Kalman filter.
+The estimation of the four variables $[x, y, z, \delta t_u]$ is either done iteratively with the Least Square method or with a Kalman Filter.
 
 \subsection{Signals}
 
@@ -185,19 +187,21 @@ The main signal for civil applications is the C/A-code on L1.
 It consists of the C/A-code itself and a data stream.
 The C/A-code and the data stream are both binary sequences.
 They are first XORed together and then modulated onto the carrier using \textit{binary phase shift keying} (BPSK).
+This process of XORing is equal to the spreading of the spectrum with the pseudorandom C/A-code sequence.
 
 The C/A-code is a sequence of 1023 bits, which repeats every millisecond and is unique to each satellite.
 The lenght of each bit, or chip in this context, is about $1\mu s$.
-This code is used to measure the signal transmission time.
+Besides the spreading and despreading of the spectrum, this code is used to measure the signal transmission time.
 The received signal is demodulated and correlated with local copies of the C/A-codes on separate channels.
 The local copy is shifted in time until an autocorrelation peak emerges.
-This timeshift determines the signal transmission time. 
 
-Besides the C/A-code is the data stream that contains the navigation message.
-It has information about the satellite orbit and the satellite clock error.
-The obit data is called ephemeris data.
-With it, the position of the satellite can be calculates at the desired time.
-The satellite clock error information is used to correct the pseudorange for the term $\delta t^{(k)}$.
+The actual data transmitted with only 50bit/s is the navigation message.
+It contains information about the satellites GPS time, orbit, clock correction and ionospheric correction.
+The obit data is called ephemeris.
+With it, the position of the satellite can be calculated.
+The satellites clock and ionospheric corrections are used to correct the pseudorange for the terms $\delta t^{(k)}$ and $I^{(k)}$.
+
+The transmitted GPS time with the current bit location in the navigation message frame and the delay from the code correlation combined make up the pseudorange measurement.
 
 \subsection{Performance}
 
@@ -234,25 +238,101 @@ The error in the GPS position is determined by two Factors.
 The reason there is a position error at all are the errors in the measured distances to the satellites called User Range Error (URE).
 These errors are further divided into three groups depending on where they occure.
 Errors in the parameters broadcasted by the satellites are here called satellite errors.
-Errors that occure in the signal path from the satellite to the receiver are called signal propagation errors.
+Errors that occure in the signal path from the satellite to the receiver are called atmospheric errors.
 Finally, errors that are caused by unprecise measurenents of the signals by the receiver are called measurement errors.
 All three types are discussed later in this section.
 
 The other factor is the satellite geometry.
-It determines how much the URE impacts the positioning accuracy.
+It determines how much the URE impacts the position accuracy.
 An optimal geometry would be stellites evenly distributed in all three dimensions.
 This is not possible because a receiver on the surface of the earth can not receive signals from satellites blocked by the earth.
 A metric to determine the geometry quality is the Dilution of Precision (DOP).
 Different versions of DOP can be determined like the Horizontal DOP (HDOP), Vertical DOP (VDOP), 3-D Position DOP (PDOP) and Time DOP (TDOP).
-The RMS position error can then be calculated with the variance of the URE ($\sigma^2$), and the corresponding DOP.
+The RMS position error can then be calculated with the standard deviation of the URE $\sigma_{URE}$ multiplied with the corresponding DOP.
 For example, the horizontal RMS position error can be calcuated with:
 \begin{equation}
- RMS \text{(horizontal position error)} = \sigma \cdot HDOP
+ RMS \text{(horizontal position error)} = \sigma_{URE} \cdot HDOP
 \end{equation}
-
 
 \subsection{Satellite Errors}
 
-\subsection{Signal Propagation Errors}
+\begin{minipage}{0.6\textwidth}
+  GPS satellites broadcast a navigation message with 50bps which includes orbital parameters to calculate their position.
+  Orbital parameters of a GPS satellite are called ephemeris. 
+  Those parameters are estimated and uploaded to the satellites by the controll segment.
+  The difference between the estimated position and the real satellite position is called ephemeris error.
+  
+  The other satellite error comes from an unprecise satellite clock.
+  Although GPS satellites have atomic clocks, they can never be perfectly alligned with GPS time.
+  That is why the controll segment also estimates a clock offset for each satellit, which is also broadcasted with the navigation message.
+  This correction apperars in the pseudorange equation \ref{eq:pseudorange} as $\delta t^{(k)}$.
+  
+  The remaining satellite errors after the pseudorange correction are the errors in the ephemeris estimation and satellite clock offset estimation.
+  They are determined by how accurate the controll segment can determine the position and time of each satellite.
+\end{minipage}
+\hfill
+\begin{minipage}{0.38\textwidth}
+ \flushright
+ \includegraphics[width=\textwidth]{images/Satellite_Errors.png}
+ \captionof{figure}{Ephemeris and time satellite errors}
+\end{minipage}
+
+\subsection{Atmospheric Errors}
+
+\begin{minipage}{0.6\textwidth}
+  The orbit of GPS satellites is at about 20'000km above the earths surface.
+  To measure the pseudorange, the signal transmission time is divided by the speed of light.
+  This implies that the signal travels through only vacuum.
+  In reality, this is not entirely accurate.
+  On the way from the satellite to the receiver, the signal has to pass trough large parts of earths atmosphere.
+  Especially two atmospheric layers influence the propagation time of the signal.
+  The first one is the ionosphere between about 50km and 1000km.
+  It consists of ionized gases.
+  The intensity of the ionization depends mainly on the sun's activity and the day/night cycle.
+  The ammount of ionization determines the delay added to the transmision time by the ionosphere.
+  The zenith delay in meters varies from 1m up to 36m. 
+  It can increase by a factor of 3 with a lower elevation of the satellite.
+  The ionosphereic delay can be modeled to a certain extent with the current space weather and appers in the pseudorange equation \ref{eq:pseudorange} as $I^{(k)}$.
+\end{minipage}
+\hfill
+\begin{minipage}{0.38\textwidth}
+ \flushright
+ \includegraphics[width=\textwidth]{images/Atmospheric_Errors.png}
+ \captionof{figure}{Ionosphereic and tropospheric errors}
+\end{minipage}
+
+The other important layer is the troposphere.
+It is the lowest part of the atmosphere and extends from the ground to about 9-16km depending on the latitude.
+The troposphere contains three-quarters of the gaseous mass and all of the water vapor of the atmosphere.
+This matter slows the signal down and results in a zenith delay of 2.3-2.6m at sea level.
+With a lower elevation of the satellite, the delay can increas by a factor of 10.
+It can be modeled with the atmospheric humidity and pressure, and is fairly stable because the biggest influence has the gaseous mass, which does not change much over time.
+The term for tropospheric delay in the pesudorange equation \ref{eq:pseudorange} is $T^{(k)}$.
 
 \subsection{Measurement Errors}
+
+Unlike the previous errors, measurement errors depend on factors like signal power, code structure and receiver design.
+Multipath is a problem most wireless communication systems have.
+The signal is refelcted by surfaces and arrives at the receiver miltiple times at different times.
+Normally, there is a main signal from the line-of-sight path, and weaker delayed versions of the signal.
+The influence no the measured range depends on the strength and delay of the reflected signal.
+
+Receiver noise is a general term for noise added by the antenna, amplifiers, cables and the receiver.
+It also includes RF radiation noise which is picked up by the antenna.
+The strength of the receiver noise relative to the GPS signal determines the signal-to-noise ratio.
+A low signal-to-noise ratio results in a tracking error of the GPS code, which in turn directly impacts the pseudorange measurement.
+
+None of those errors can be modeled, so they are included in the term $\varepsilon^{(k)}$ in the pseudorange equation \ref{eq:pseudorange}.
+
+\begin{minipage}{0.45\textwidth}
+ \flushleft
+ \includegraphics[width=\textwidth]{images/Multipath.png}
+ \captionof{figure}{Multipath in an urban canyon}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+ \flushright
+ \includegraphics[width=\textwidth]{images/Receiver_Noise.png}
+ \captionof{figure}{Tracking error caused by receiver noise}
+\end{minipage}
+
