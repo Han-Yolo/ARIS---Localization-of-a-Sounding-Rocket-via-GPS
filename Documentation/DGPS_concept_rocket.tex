@@ -9,10 +9,16 @@ The important part here is the vertical accuracy, because this is the value used
 Standard GPS is only accurate to 15 meters for 95\% of the time in the vertical axis.
 A significant improvement is needed to satisfie the accuracy reqiurement of 1 meter stated in section \ref{sec:requirements}.
 
+The term \textit{sounding rockets} describes sub-orbital research rockets.
+Their time in space is typically only 5-20 minutes.
+They fly a parabolic trajectory to bring scientific experiments to altitudes that cannot be studied otherwies.
+Regions like the lower ionisphere are to high for weather balloons and to low for satellites.
+Sounding rockets fill that gap.
+\cite{Sounding_Rockets}
 
-\section{Special Conditions}\label{sec:special_conditions}
+\section{Special Conditions on a Sounding Rocket}\label{sec:special_conditions}
 
-The conditions on a rocket are unlike anything most GPS receivers will ever experience.
+The conditions on a sounding rocket are unlike anything most GPS receivers will ever experience.
 The acceleration, velocity and height are the three main parameter that could exceed the operating range of a commercial off-the-shelf (COTS) receiver.
 There could either be a technical or legal limit to those parameters.
 A receiver as to be picked or tested for the given requirements.
@@ -38,48 +44,77 @@ Interference can cause the \textit{carrier-to-noise densitiy} to shrink to the p
 Tests are needed to evaluate the influence of other elecrtonical components in the rocket on the GPS antenna and receiver.
 The influence of relatively high power sources like the telemetry transmitter should first be calculated as far as possible to minimize the risk of damaging the GPS receiver.
 
+
 \section{Accuray Enhancement Concept}
 
-\section{System Overview}
+The proccess of evaluating the appropriate accuracy enhancement method is explained in this section.
+The concept of applying this method to a sounding rocket is then described.
+Possible problems in this approach are also examined.
 
-\section{Data Flow}
+\subsection{Error Correction Method Selection}
 
-\section{Potential Problems}
+The three error correction methos evaluated in chapter \ref{ch:error_correction} were compared to find the right solution for the GPS accuracy problem.
+Importand factors were the accuracy improvement and the suitability for a sounding rocket.
 
+Dual Frequency Measurements are a relatively straight forward way of reducing the ionospheric error.
+Receiver with the capability of measuring L2C in addition to L1 C/A normally apply this method internally.
+From a user perspective, it is am matter of buying the right hardware.
+A problem is that at the moment, only about 2/3 of GPS satellites send out the L2C signal, although this will improve with the launch of new satellites.
+Also, the error mitigation is limited to ionospheric errors.
+Dual Frequency Measurements alone cannot improve the accuracy to the needed level.
 
+Measurement errors can make up a large part of the total URE depending on the environment and the receiver quality.
+Carrier-Phase Measurements can reduce the multipath error and receiver noise by two orders of magnitude.
+But these improvements come at the cost of a more delicate system.
+It is even more crucial to continuously track the satellite signals than with standard code measurements.
+To get a pseudorange from Carrier-Phase Measurements, the integer ambiguities of the carrier phase have to be resolved first.
+This process can take multiple minutes to converge.
+If tracking is lost, the amiguities have to be resolved again.
+Extreme conditions like the high acceleration during the burn of a sounding rocket can temporarily lead to a loss of tracking.
+In this case, the rocket could potentially only get a carrier-phase GPS fix again after it landed.
 
-\subsubsection{Setup:}
-\begin{itemize}
- \item Two M8T modules in the nosecone and one at the ground station.
- 
- \item RF-uplink from ground station to rocket.
-\end{itemize}
+The method of Differential GPS can reduce all of the external errors.
+Satellite errors and atmospheric errors are both correlated for two receivers relatively close together.
+Good implementation were able to bring down the position error to the centimeter level.
+So theoretically it is possible to achieve the 1 meter accuracy required by the rocket controll.
+For this reasons, the DGPS approach was choosen for this project.
 
+\subsection{DGPS Concept}
 
-\subsubsection{Procedure:}
-\begin{itemize}
- \item Ground station averages position measurements over a longer time to get reference position. 
- This might not be the exact position, but this only results in a constant bias in the rockets absolute position. 
- Reference position stays fixed when sending of differential correntions starts.
- 
- \item Ground station calculates distance to each visible GPS satellite from reference position and ephemeris data.
- 
- \item The differnce between the calculated distance and the measuren pseudorange is calculated for each satellite.
- 
- \item RTCM 2.3 meassage 1 and 3 are created with the pseudorenge corrections.
- 
- \item The RTCM messages are sent to the rocket over the RF-link. 
- The update rate of the corrections could be about 1Hz.
- 
- \item On the rocket, the messages are fed into the UART interface of the GPS receiver which includes them in the position estimation.
- 
- \item Tropospheric corrections could be added to the pseudorange corrections at the ground station or in the rocket.
- 
- \item The first correction is sent when the rocket is still on the launch pad.
- One or more corrected measurements at the launch pad serve as the zero point of the trajectory.
- 
- \item The position estimations during the flight can be differnced with the launch pad zero point to get the relative position to the launch pad.
- With this the reference position bias cancels out.
- For the rocket controll and the post processing, the relative position to the launchpad is more relevant.
- The absolute position, where the reference positon bias is still present, is only needed for the recovery of the rocket where accuracy is not as important.
-\end{itemize}
+\begin{minipage}{0.6\textwidth}
+  The main problem with DGPS is to get good corrections from a reference station not too far away.
+  These corrections can come from an SBAS, over the internet from third party stations, or from a self set up reference station.
+  Corrections from a self set up reference station were preferred for this project because of multiple reasons.
+  The reference station can be placed by the ground station to have a small distance to the rocket.
+  The corrections can then be sent to the rocket over an RF-link as shown in figure \ref{fig:dgps_rocket_concept}.
+  With an self set up reference station, one has a lot of controll over the system and what goes into the corrections.
+  The system can be tailored to the specific application.
+  But with a lot of design freedom also comes a substantional development effort.
+  A tradeoff will have to be made there between in-house design and COTS.
+\end{minipage}
+\hfill
+\begin{minipage}{0.35\textwidth}
+  \centering
+  \includegraphics[width=\textwidth]{images/DGPS_Rocket_Concept.png}
+  \captionof{figure}{DGPS concept for a sounding rocket}
+  \label{fig:dgps_rocket_concept}
+\end{minipage}
+
+A success of the project is defined by how well the requirements form section \ref{sec:requirements} are met.
+The first requirement was about the accuracy.
+DGPS was choosen as a methos to reach that goal.
+The second requirement said that a position fix should be aquired max. 2 seconds after the burnout.
+DGPS itself does not pose a problem to meet that requirement.
+Even if the communication link was lost during the burn, the already sent corrections stay valid for some time.
+Corrections are correlated up to a minute of time difference or longer and can still be used by the receiver.
+It depends on the design and configuration of the receiver in the rocket if this requirement can be met.
+The final requirement limits the uplink bandwidth to 2kbit/s.
+With an estimated correction message size of 1kbit and a rate of one message pre second, only half the bandwidth is used.
+The rate of correction messages could also be reduced to once every ten seconds or lower without a big decrease in performance.
+
+A problem could arise from the large height difference between the reference station and the rocket when it climbs to the apogee.
+DGPS depends on correlated external errors.
+But a height difference of 3km lets the receiver on the rocket experience a smaller tropospheric delay than the reference station.
+DPGS can not account for this difference.
+If this turns out to be a big problen for the position accuracy, it has to be accounted for.
+Either both the reference station and the rocket receiver apply a tropospheric model to correct their pseudoranges, or a differential tropospheric model is added to the pseudorange corrections.
