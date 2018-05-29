@@ -124,7 +124,7 @@ This receiver then corrects its pseudoranges with the latest PRCs before estimat
 \section{GPS Receiver}\label{sec:receiver}
 
 \begin{minipage}{0.6\textwidth}
-  A seen in figure \ref{fig:data_flow}, the M8T receiver used by TELL was also choosen for this project.
+  A seen in figure \ref{fig:data_flow}, the M8T receiver from u-blox used by TELL was also choosen for this project.
   The reasons for this decision were the following:
   \begin{itemize}
   \item output of raw GPS data
@@ -132,6 +132,12 @@ This receiver then corrects its pseudoranges with the latest PRCs before estimat
   \item same receiver can be used for rocket and reference station
   \item compatibility with post-processing DGPS
   \end{itemize}
+  The avionics of project TELL are modular with separate boards for telemitry, GPS, and intra-rocket communication.
+  This reduces the development effort and faulty parts can be replaced more easily.
+  The different boards are connected with RS232 interfaces.
+  Figure \ref{fig:m8t_receiver_board} shows the GPS board with a M8T receiver, antenna connector, RS232 interface, USB interface, and 12 V input.
+  This board is used twice in the rocket and once at the ground station as post-processing DGPS reference station for project TELL.
+  The exact same hardware setup can be used for the real-time DGPS.
 \end{minipage}
 \hfill
 \begin{minipage}{0.37\textwidth}
@@ -141,6 +147,58 @@ This receiver then corrects its pseudoranges with the latest PRCs before estimat
  \label{fig:m8t_receiver_board}
 \end{minipage}
 
-\section{RTCM 2.3 Protocol}\label{sec:rtcm}
+GPS receivers from u-blox can communicate with messages from three different protocols.
+The first one being NMEA.
+It the standard way for GPS receivers to output their data.
+It is in ASCII format which makes it easy to find in a bit stream.
+All the standard data like time, position and satellite information can be aquired with NMEA messages.
+The second is the u-blox proprietary UBX protocol.
+Much more specific information can be optained with UBX messages like the GPS raw data in the case of the M8T receiver.
+It is also use to configure the receiver.
+The third protocol understand by u-blox receivers is RTCM.
+This is a set of standards for receiver independent differental GPS corrections.
+It is described in section \ref{sec:rtcm}.
+
+A requirement for the receiver on the rocket is that the acceleration, velocity and altitude experienced on a sounding rocket do not exceede its operational limits.
+The operational limits of 50'000 meters max. altitude and 500 m/s max velocity of the M8T receiver are both sufficient.
+The goal of the competition is to go to an altitude of 3048 meters.
+The max. speed reached by TELL will be at the border of supersonic which is 343 m/s.
+Those are legal limits where the receiver must not provide a fix if exceeded.
+The acceleration limit on the other hand is caused by the implementation of the receiver.
+It is only 4 g, whereas TELL will experience up to 10 g of acceleration.
+This could pose a problem.
+But the receiver is actually not required to get a fix during the burn when the acceleration is experienced.
+It only has to get a fix max. 2 seconds after burnout.
+If the reaquisition time is sufficiently small, the receiver could still meet the requirements.
+This parameter is not given in the datasheet, but the related parameter of a time-to-first-fix in case of a hot start is given as 1 second.
+If this requirement will be met can only be definitively confirmed with a rocket flight test. \cite{M8T}
+
+\section{RTCM 2.3 Standard}\label{sec:rtcm}
+
+RTCM stands for Radio Technical Commission for Maritime Services.
+It is an organization that defines standards mainly for use in matitime applications.
+One group of standards define the protocol for DGPS corrections.
+There are three generations of standards in this group.
+The most recent ones being 10403.3 of the third generation and 10402.3 of the second generation.
+U-blox GPS receivers with the possibility of DGPS understand either of those standards.
+In the case of the M8T it is 10402.3 which is mostly just called RTCM 2.3 \cite{RTCM_2.3}.
+
+The RTCM 2.3 standard defines 30 messages.
+The messages are divided into 30 bit long words like the GPS navigation messages.
+The last 6 bits of each word are parity bits.
+The parity algorithm is also adopted form the GPS navigation messages and can be found in the GPS Interface Specification \cite{IS-GPS-200}.
+It defines that the parity of each word is connected to the last two parity bits of the previous word.
+This is also true across messages for the RTCM 2.3 standard.
+Each message starts with a header of two words that includes a preamble, the message type, the station I.D., a modified verson of the z-count (time reference in navigation messages), a sequence number, the number of data words in this message, and the station health.
+
+The M8T receiver requires message 1 and message 3 to enter DGPS mode.
+Message 1 is used to transmit the DGPS corrections.
+For each satellite a PRC is calculated, this message transmits a scale factor, user differential range error (UDRE), pseudorange correction, range-rate correction, and issue of data (IOD).
+The scale factor determines the scale of the pseudorange correction to 0.02 or 0.32 m and the range-rate correction to 0.002 or 0.032 m/s.
+The UDRE is the estimated error in the differental corrections.
+The range-rate corrections can be used to interpolate between pseudorange corrections.
+It is no longer necessary since Selective Availability (a intended noise introduced to civil GPS signals) was switched off in the year 2000 and can be set to 0.
+Message three transmits the XYZ coordinates of the reference station in an earth-centered, earth-fixed (ECEF) reference frame.
+This message is needed to determined the closest reference station if multiple RTCM streams are received.
 
 \section{DGPS Message Generator}\label{sec:dgps_message_generator}
