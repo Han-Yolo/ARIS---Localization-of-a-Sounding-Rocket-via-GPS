@@ -118,6 +118,22 @@ Unlike the other segments, the User Segment is not developed by the U.S. Governm
 The design of civil GPS receivers is left to market forces.
 The size of those receivers droped dramatically during the lifetime of GPS from the size of a backpack, to the size of a single microchip.
 
+\subsection{Reference Frame}
+
+A navigation system needs a common reference frame.
+In the case of GPS, this is the World Geodic System 1984 (WGS 84).
+Most caclulations when using GPS are not done using latitude, longitude and altitude, but an earth-centered, earth-fixed (ECEF) reference frame.
+In the case of WGS 84, the origin is at the mass center of the earth and a position is given with XYZ coordinates.
+The x-axis goes through the equator at the longitude of Greenwich.
+The z-axis goes through the north pole and the y-axis has a right angle to both of the other axes.
+
+\begin{figure}[ht]
+ \centering
+ \includegraphics[width=0.7\textwidth]{images/WGS84.png}
+ \caption{Definition of the WGS 84 reference frame \cite{WGS84}}
+ \label{fig:wgs84}
+\end{figure}
+
 
 \subsection{Functional Principle}
 

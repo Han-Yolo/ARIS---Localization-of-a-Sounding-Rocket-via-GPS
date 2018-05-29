@@ -112,13 +112,13 @@ order=3
 
 [item:Conclusion.tex]
 archive=true
-column=0
+column=20
 encoding=UTF-8
 highlight=LaTeX
 line=0
 mode=LaTeX
-open=false
-order=-1
+open=true
+order=8
 
 [item:DGPS_concept_rocket.tex]
 archive=true
@@ -152,20 +152,20 @@ order=2
 
 [item:GPS_concept.tex]
 archive=true
-column=0
+column=56
 encoding=UTF-8
 highlight=LaTeX
-line=324
+line=131
 mode=LaTeX
 open=true
 order=3
 
 [item:Implementation.tex]
 archive=true
-column=52
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=157
+line=294
 mode=LaTeX
 open=true
 order=6
@@ -178,7 +178,7 @@ highlight=LaTeX
 line=55
 mode=LaTeX
 open=true
-order=1
+order=2
 
 [item:Testing.tex]
 archive=true
@@ -212,13 +212,13 @@ order=-1
 
 [item:literatur.bib]
 archive=true
-column=41
+column=45
 encoding=UTF-8
 highlight=BibTeX
-line=59
+line=85
 mode=BibTeX
 open=true
-order=2
+order=0
 
 [item:main.tex]
 archive=true
@@ -228,7 +228,7 @@ highlight=LaTeX
 line=105
 mode=LaTeX
 open=true
-order=0
+order=1
 
 [view-settings,view=0,item:Abstract.tex]
 CursorColumn=19
@@ -237,10 +237,10 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:Conclusion.tex]
-CursorColumn=0
+CursorColumn=20
 CursorLine=0
 JumpList=
-ViMarks=
+ViMarks=.,4,28,[,4,9,],4,28
 
 [view-settings,view=0,item:DGPS_concept_rocket.tex]
 CursorColumn=136
@@ -261,16 +261,16 @@ JumpList=
 ViMarks=
 
 [view-settings,view=0,item:GPS_concept.tex]
-CursorColumn=0
-CursorLine=324
+CursorColumn=56
+CursorLine=131
 JumpList=
-ViMarks=.,77,3,[,77,1,],77,3
+ViMarks=.,132,62,[,132,62,],132,62
 
 [view-settings,view=0,item:Implementation.tex]
-CursorColumn=52
-CursorLine=157
+CursorColumn=0
+CursorLine=294
 JumpList=
-ViMarks=.,157,51,[,157,50,],157,51
+ViMarks=.,294,0,[,294,0,],294,0
 
 [view-settings,view=0,item:Introduction.tex]
 CursorColumn=43
@@ -291,10 +291,10 @@ JumpList=
 ViMarks=.,17,18,[,17,18,],17,18,a,41,0
 
 [view-settings,view=0,item:literatur.bib]
-CursorColumn=41
-CursorLine=59
+CursorColumn=45
+CursorLine=85
 JumpList=
-ViMarks=.,59,40,[,59,40,],59,40
+ViMarks=.,85,44,[,85,44,],85,44
 
 [view-settings,view=0,item:main.tex]
 CursorColumn=21

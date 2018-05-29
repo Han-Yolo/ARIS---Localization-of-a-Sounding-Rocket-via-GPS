@@ -6,6 +6,7 @@ Although this project is not planned to be used in this years competition, the s
 Section \ref{sec:tell_infrastructure} shows what is already implemented in project TELL.
 How DGPS can be integrated into this infrastructure is explained from section \ref{sec:system_overview} onward.
 
+
 \section{TELL Organization and Infrastructure}\label{sec:tell_infrastructure}
 
 At the time of writing, the rocket of prject TELL is being made ready to ship to the U.S. for the 2018 Spaceport America Cup.
@@ -67,6 +68,7 @@ The GPS module M8T fron u-blox was choosen for this purpose and is used in the r
 The speciality of the M8T module is, that it provides raw GPS data like the measured pseudoranges.
 This is needed for post-processing DGPS.
 
+
 \section{System Overview}\label{sec:system_overview}
 
 The difference of the DGPS system described in this thesis to the post-processing one used by project TELL is when the corrected position is availabel.
@@ -121,6 +123,7 @@ They are sent over another USB connection to the XBee module of the ground stati
 The messages are forwarded to the flight computer in the nosecone, where they are separated from other data and fed into the GPS receiver on the rocket.
 This receiver then corrects its pseudoranges with the latest PRCs before estimating the rocket position.
 
+
 \section{GPS Receiver}\label{sec:receiver}
 
 \begin{minipage}{0.6\textwidth}
@@ -173,6 +176,7 @@ If the reaquisition time is sufficiently small, the receiver could still meet th
 This parameter is not given in the datasheet, but the related parameter of a time-to-first-fix in case of a hot start is given as 1 second.
 If this requirement will be met can only be definitively confirmed with a rocket flight test. \cite{M8T}
 
+
 \section{RTCM 2.3 Standard}\label{sec:rtcm}
 
 RTCM stands for Radio Technical Commission for Maritime Services.
@@ -198,7 +202,104 @@ The scale factor determines the scale of the pseudorange correction to 0.02 or 0
 The UDRE is the estimated error in the differental corrections.
 The range-rate corrections can be used to interpolate between pseudorange corrections.
 It is no longer necessary since Selective Availability (a intended noise introduced to civil GPS signals) was switched off in the year 2000 and can be set to 0.
-Message three transmits the XYZ coordinates of the reference station in an earth-centered, earth-fixed (ECEF) reference frame.
+The IOD is sent to ensure that both the refernce station and the user use the same parameters to calculate the satellite position.
+Message three transmits the XYZ coordinates of the reference station in the WGS 84 reference frame.
 This message is needed to determined the closest reference station if multiple RTCM streams are received.
 
+It is important for the system to work that both the reference station and the user correct the pseudoranges for the same errors.
+The standard states that the raw pseudoranges have to be adjusted for the receiver clock offset, satellite clock offset, satellite relativistic corrections, and L1-L2 group delay correction in the case of a dual frequency receiver.
+Neither of the atmospheric errors should be modeled to correct the pseudoranges.
+Only a tropospheric model that incorporates the different altitudes of the reference station and user can be applied if necessary.
+For the data link, an update rate of once every 30-60 seconds is stated as adequate.
+
+
 \section{DGPS Message Generator}\label{sec:dgps_message_generator}
+
+It was decided to develop a custom application to generate the PRCs from the raw GPS data at the reference station.
+This made up the biggest part of the development effort for this project.
+The application has to run on the ground station laptop and connect to the GPS receiver as input and the XBee module as output.
+It was written in C++ and developed to run on Linux.
+For the development environment, Qt Creator was choosen.
+
+\newpage
+
+\subsection{Software Architecture}
+
+The different files of the application and their connections are shown in figure \ref{fig:software_architecture}.
+On application startup, the MainWindow widget starts running.
+It is responsible for the graphical user interface (GUI) and the start of the underlying programs.
+Before the DGPSMesGen can be started, the application has to know the location of the reference station.
+This position can either measured with the PositionAveraging, or it can be loaded from a file or from the RefPosDialog.
+When the reference position is set, the DGPSMesGen can be started.
+It then starts the UBloxInterface, XBeeInterface and NavMessageDecoder.
+The DGPSMesGen and the three newly started threads communicate over multiple instances from the ThreadQueue class.
+The data types used to transmit data over the ThreadQueues are defined in the header files GPSDataTypes and UBloxMessages.
+Additional functions used by the UBloxInterface and XBeeInterface are implemented in the files TypeConversion and RTCMEncode.
+A Debug header file is used to enable debug, and logging functionality.
+
+\begin{figure}[ht]
+ \centering
+ \includegraphics[width=\textwidth]{images/Software_Architecture.png}
+ \caption{Software architecture of the DGPS Message Generator}
+ \label{fig:software_architecture}
+\end{figure}
+
+\subsection{Data Flow}
+
+The data flow graph in figure \ref{fig:data_flow} gives a better overview of the internal functionality of the DGPS Message Generator and how it fits into the ground station infrastructure.
+The data stream from the GPS receiver is channeled over a USB port of the laptop to a serial port, from where it can be read from the application.
+The UBloxInterface reads the serial stream and extracts the needed messages.
+Two ThreadQueues are fed with the messages containing the pseudoranges and the navigation messages.
+The Navigation Message Decoder pulls the raw navigation messages from the ThreadQueue and extacts the ephemeris and other satellite data.
+If a pseudorange measurement and all needed satellite data is availabel, it is proccessed by the DGPS Message Generator and incorporated in the next correction message.
+All the data neede to generate the RTCM message 1 and 3 are forwarded to the XBee Interface.
+That is where the data is encoded into the RTCM protocol and then sent out to a XBee application also running on the laptop.
+It routes the data over a serial port and USB port to the XBee module.
+
+\begin{figure}[ht]
+ \centering
+ \includegraphics[width=\textwidth]{images/Data_Flow.png}
+ \caption{Data flow from the GPS receiver to the XBee module}
+ \label{fig:data_flow}
+\end{figure}
+
+\subsection{Graphical User Interface}
+
+\begin{minipage}{0.5\textwidth}
+ The front end of the application is a graphical interface.
+ On the top, it has multiple options to set a reference position.
+ It can be set directly over an input dialog, loaded from a file or measured with a connected GPS receiver.
+ The position can also be saved to a binary file with the ending .wgs84 for later use.
+ The middle section is a sort of command line output.
+ All actions made by the user are confiremed there and errors are displayed in red.
+ On the bottom, the actual DGPS Message Generator can be started and stopped.
+ Input and output port and baud can be specified.
+ The output settings are only needed if the external XBee software is bypassed and the RTCM messages are directly sent to a serial port.
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+ \centering
+ \includegraphics[width=\textwidth]{images/GUI.png}
+ \captionof{figure}{Graphical user interface}
+ \label{fig:gui}
+\end{minipage}
+
+\subsection{U-Blox Interface}
+
+The communication with the GPS receiver takes place over the proprietary UBX messages.
+Three messages are needed by the application.
+The pseudoranges are transmitted with the UBX-RXM-RAWX message.
+The GPS navigation messages are tramsmitted in raw form by the UBX-RXM-SFRBX message.
+To be able to measure the reference position, the UBX-NAV-POSECEF message is used.
+It has the information of the position estimation in ECEF form.
+
+
+\subsection{XBee Interface}
+
+\subsection{Navigation Message Decoder}
+
+\subsection{DGPS Message Generator}
+
+\subsection{Position Averaging}
+
+\subsection{Debug}
