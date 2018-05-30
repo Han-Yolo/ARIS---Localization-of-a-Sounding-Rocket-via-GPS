@@ -268,8 +268,8 @@ It routes the data over a serial port and USB port to the XBee module.
 \begin{minipage}{0.5\textwidth}
  The front end of the application is a graphical interface.
  On the top, it has multiple options to set a reference position.
- It can be set directly over an input dialog, loaded from a file or measured with a connected GPS receiver.
- The position can also be saved to a binary file with the ending .wgs84 for later use.
+ It can be set directly over an input dialog (Set), loaded from a file (Load) or measured with a connected GPS receiver (Measure).
+ The current reference position can also be saved to a binary file with the ending .wgs84 for later use (Save).
  The middle section is a sort of command line output.
  All actions made by the user are confiremed there and errors are displayed in red.
  On the bottom, the actual DGPS Message Generator can be started and stopped.
@@ -293,13 +293,89 @@ The GPS navigation messages are tramsmitted in raw form by the UBX-RXM-SFRBX mes
 To be able to measure the reference position, the UBX-NAV-POSECEF message is used.
 It has the information of the position estimation in ECEF form.
 
+The appropriate bytes for each value of a message are separated and converted to the their original data type using functions from the TypeConversion header file.
+All the values of a message are then combined in a struct and pushed to the appropriate ThreadQueue.
 
-\subsection{XBee Interface}
-
-\subsection{Navigation Message Decoder}
-
-\subsection{DGPS Message Generator}
+When the thread starts, UBX configuration messages are sent to the GPS receiver to set the operation mode and enable the needed messages.
+The UBX-RXM-RAWX and UBX-NAV-POSECEF messages then come in with a frequency of 1 Hz.
+UBX-RXM-SFRBX is sent when navigation message data is availabel in the GPS receiver.
 
 \subsection{Position Averaging}
 
+One option to set the reference position is by measuring is directly with the GPS receiver.
+This position will be biased by the GPS errors.
+To get a more accurate positon, the positon is measured over a period of time and then averaged.
+When the Measure button on the GUI is pressed, the PositionAveraging thread is started.
+It saves all the position values form UBX-NAV-POSECEF messages that come in over the UBloxInterface in a vector until the Measure button is pressed again.
+All the values in the vector are then averaged and set as new reference position.
+
+\subsection{Navigation Message Decoder}
+
+The NavMessageDecoder thread is started in parellel to the DGPSMesGen thread.
+It is responsible for the decoding of the GPS navigation messages.
+Their content is needed by the DGPSMesGen to calculate the satellite positions and the satellite clock corrections.
+It starts by reading the UBX-RXM-SFRBX messages.
+They contain the raw navigation messages.
+The values are extracted from the byte values much like the UBX messages in the UBloxInterface.
+Navigation messages come in subframes.
+The first three subframes of the navigation message of a satellite are needed to calculate its position and clock correction.
+When a subframe is decoded, the values are saved to the appropriate ephemeris struct.
+When an ephemeris struct has the matching information of all three subframes, it is marked as valid.
+A valid ephemeris struct can be fetched by other threads with the public getEphemeris function.
+
+\subsection{DGPS Message Generator}
+
+In the DGPSMesGen theread, the actual PRCs are calculated.
+It waits until a UBC-RXM-RAWX message is available from the ThreadQueue.
+If ephemeris data is available from the NavMessageDecoder for the pseudoranges in the RAWX message, it continues to calculate the PRCs for those satellites.
+It iterates trough all satellites for which a pseudorange and ephemeris data is available.
+The calculation for each satellite is done in the following steps:
+\begin{enumerate}
+ \setlength\itemsep{0.1cm}
+ \item calculate the time of transmission: \\
+ time of transmission = time of reception - trasmission time
+ \item calculate the satellite position at the time of transmission and correct it for the earts rotation during transmission
+ \item calculate the distance between reference station and satellite: \\
+ calculated range = $\lvert \lvert$ reference position - satellite position $\rvert \rvert$
+ \item calculate the satellite clock correction: \\
+ satellite clock correction = satellite clock offset + satellite relativistic correction
+ \item correct the raw pseudorange with the satellite and receiver clock corrections: \\
+ corrected pseudorange = raw pseudorange + (satellite clock correction + receiver clock offset) $\cdot$ speed of light
+ \item calculate pseudorange correction: \\
+ pseudorange correction = calculated range - corrected pseudorange
+\end{enumerate}
+After all pseudorange corrections are calculated, the receiver clock offset is estimated.
+This is done by taking the average of the pseudorange corrections: \\
+receiver clock offset = mean(pseudorange corrections)
+
+Because the receiver clock offset is not available yet when the pseudorange is corrected, the whole proccess has to be done iteratively.
+It is implemented with three iterations to get a good receiver clock offset estimation.
+After this, the PRCs are smoothed with a moving average filter.
+The filter is configured to average over ten values.
+The filtered PRCs along with their satellite ID and IOD are pushed to the ThreadQueue for RTCM message 1.
+The reference position is sent to the ThreadQueue for RTCM message 3 every ten seconds.
+
+\subsection{XBee Interface}
+
+The XBeeInterface therad waits until data arrives over the ThreadQueues for RTCM messge 1 and 3.
+The data is then encoded with functions from the header file RTCMEncode.
+They return the byte stream that can be sent over a serial interface.
+In the final application, this byte stream is sent to an XBee software that handles the communication with the XBee module.
+This has not been implemented yet because the interface to that software is not defined.
+For testing, the XBeeInterface can send the byte stream directly to a serial port where the user GPS receiver can be connected.
+
 \subsection{Debug}
+
+Code segments were added in multiple places in the files DGPSMesGen.cpp, XBeeInterface.cpp and RTCMEncode.h to print data to a terminal.
+To have an overview of which debug options are active, they can be enabled with macros from the Debug header file.
+The debug options are:
+\begin{itemize}
+ \setlength\itemsep{0.1cm}
+ \item Satellite position
+ \item Receiver clock offset
+ \item Pseudorange corrections
+ \item RTCM messages
+ \item Serial output
+\end{itemize}
+Also the logging of the PRCs to a .csv file and the writing of the RTCM output directly to a seria port can be enabled in the Debug header file.
+An example of the debug output when the RTCM messages option is enabled can be seen in figure \ref{}.
