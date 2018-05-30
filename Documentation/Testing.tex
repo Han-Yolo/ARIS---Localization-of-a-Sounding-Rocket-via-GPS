@@ -1,19 +1,51 @@
 \chapter{Testing and Validaton}
 
+The implementation described in the previous chapter now has to be tested.
+The testing should show if the implemented system produces the required output.
+Testing of single parts of the system like the interface from the application to the GPS receiver or the calculation of satellite positions is not the focus here.
+The tests described are on the level of the whole system.
+Multiple accuracy tests were planned to test different factors that could impact the system.
+Most tests were planned to determine how accurate the DGPS system is compared to standard GPS.
+Also the influences of the extreme conditiond on a sounding rocket should be determined with these tests as far as possible.
+Unfortunately, there was not enough time to conduct all planned tests.
+Only static accuracy tests were conducted.
+The most representative is described in section \ref{sec:static_accuracy}.
+
+
 \section{Testing Setup}
-Two receivers, with and without correction message input.
-Both can log data.
-Reference station with antenna pole, GPS receiver, laptop and XBee module.
-Software to visualize data.
 
-\section{Static Accuracy}
-Compare GPS positioning accuracy with and without correction messages to see if the accuracy is improved.
-The reference receiver measures the reference position over some hours.
-The rover is at a fixed and though Google Maps known location.
-The variance and bias are observed in both cases.
+The setup to test the system does not differ much from the system described in the implementation chapter.
+The difference is that for static accuracy tests, no wireless communication is needed.
+The corrections can be sent directy to a second receiver plugged into the laptop which runs the application.
+Two receivers are needed for the DGPS, one as reference station and one as user.
+Additionally, a receiver has to measure the position without applying the corrections to have a reference to compare the DGPS to.
+This setup can be achieved with only two receivers, when the postition output of the reference receiver is used as the uncorrected GPS measurement.
 
-Is the bias improved?
-Is the variance improved?
+Needed to evaluate the tests are the position estimations with and without applying the corrections, and the PRCs.
+The M8T receiver has the ability to log all its output.
+It can later be retrieved with the u-blox software u-center.
+The logging of the PRCs can be enabled in the DGPS Message Generator application.
+
+Before the logged data can be evaluated, the messages have to be extracted from the bit straem.
+A NMEA parser was written in C++ to extact the GxGGA messages and save them to a .csv file.
+They contain GPS fix data like UTC time, latitude, longitude and altitude.
+The evaluation is done with Matlab scripts that understands the format of the generated .csv files.
+
+\section{Static Accuracy}\label{sec:static_accuracy}
+
+Static accuracy test means that the user receiver does not move and is at the same position as the reference station.
+This test was done at a surveyed location to be able to measure the absolute position error.
+The Swiss Federal Office of Topography Swisstopo manages the control points data used for natonal surveying.
+Swisstopo makes the data available online in form of a map \cite{Swisstopo}.
+The choosen test location is a control point on the Sonnenberg in Kriens (Appendix \ref{appendix:control_point_sonnenberg}).
+
+
+\begin{figure}[ht]
+ \centering
+ \includegraphics[width=\textwidth]{images/measurement_kriens_setup.png}
+ \caption{Measurement setup on the Sonnenberg in Krines}
+ \label{fig:measurement_kriens_setup}
+\end{figure}
 
 
 \section{Pending Tests}
@@ -42,3 +74,7 @@ How much impact does the tropospheric height effect have on the DGPS accuracy?
 \subsection{Correction Message Interruption}
 
 \subsection{Rocket Test}
+
+\subsection{Evaluation}
+
+Because of the results of the satatic accuracy tests, it would also not make sense to test the other scenarios.
