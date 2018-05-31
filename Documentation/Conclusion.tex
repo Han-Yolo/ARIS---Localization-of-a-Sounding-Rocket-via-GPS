@@ -1,10 +1,35 @@
 \chapter{Conclusion}
 
-
+This final chapter looks back at the project in terms of what has be achieved, how the implemented system can benefit a future ARIS project and what other approaches there are to reach the set goals.
 
 \section{Meeting the objectives}
 
+The assignment for for this project was to evaluate errors that impact the accuracy of GPS positioning and find ways to mitigate them.
+The most promising approach should be implementet to show its feasability.
+Three groups of errors were found that contain errors in the satellite state, atmospheric modelling and signal reception.
+From the three evaluated error correction methods, differential GPS emerged to be the most effective and most suited to implement on a sounding rocket.
+A DGPS system was planned to implement on a ARIS sounding rocket and the key component that generates the corrections was developed.
+The system was successful at generating correction messages that the user receiver can understand and apply.
 
+Requirements were set in the beginning to specify concrete values by which the success of the project can be deteremined.
+The first and most important requirement is about the accuracy of the system.
+The vertical RMS error of the position estimation for the rocket should be less than 1 meter.
+The current state of the implemented system dose not acieve this.
+The static accuracy test showed a vertical RMS error of 8.75 meters.
+This was slightly better than the standard GPS vertical error of 11.75 meters RMS, but still far off the goal of 1 meter.
+
+The second requirement stated that the rocket should have a GPS fix max. 2 seconds after burnout.
+DGPS does not pose a problem to achieve this.
+It depends on the choosen GPS receiver.
+According to the datasheet, the receiver could loose the fix during burn but should be able to get a fix again within 2 seconds.
+Only a test can definitively determine if this requirement can be fulfilled.
+During this project, no ARIS rocket was launched with GPS onboard.
+
+Finally, a requirement was set to limit the upload bandwith to the rocket that the system can use.
+A max. bandwith of 2 kbit/s was defined.
+With the choosen protocol to send the DGPS corrections, only half the max. bandwidth is used when corrections are sent every second, which is plenty.
+
+\section{Future Development}
 
 \section{Different Approaches}
 
