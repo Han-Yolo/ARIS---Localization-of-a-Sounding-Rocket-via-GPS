@@ -1,1 +1,22 @@
 \chapter*{Abstract}
+
+The Swiss Space Initiative (ARIS) was founded by students from the ETH and HSLU in 2017.
+Its inaugural project is to build a sounding rocket to compete in the Spaceport America Cup 2018 in New Mexico.
+More than 100 student teams compete there to launch a 4 kg payload to precisely 10'000 feet (ca. 3 km).
+In the context of this project called TELL, a system for the localization of a sounding rocket via GPS should be developed.
+GPS is evaluated for the special application on a sounding rocket and a system is developed to increase its accuracy.
+
+The sources of errors that impact GPS accuracy were determined and divided into the three groups: Errors in the satellite states, atmospheric errors and signal reception errors.
+Different methods were evaluated to mitigate one or more of those errors.
+Differential GPS (DGPS) was found to be the most effective method and a proof of concept was implemented to show its functionality.
+The system was designed to work with the infrastructure of project TELL.
+The ground station serves as the reference station that calculates the differential corrections.
+These corrections are sent in the RTCM 2.3 standard over the telemetry RF-link to the rocket
+There, they are applied by the GPS receiver before estimating the rocket position.
+The u-blox M8T GPS receiver was used to get GPS raw data.
+A C++ application was developed to generate the differential corrections from the GPS raw data at the ground station.
+
+Possible problems for GPS positioning on a sounding rocket were found to be the 10 g acceleration, rotation-related fading and telemetry antenna interference.
+The developed DGPS system was tested if it could increase the GPS accuracy in a satatic test at a survey control point.
+The application is able to generate corrections from the GPS raw data that can be understood and applied by the DGPS receiver.
+The system was not observed to noticeably improve the GPS accuracy.

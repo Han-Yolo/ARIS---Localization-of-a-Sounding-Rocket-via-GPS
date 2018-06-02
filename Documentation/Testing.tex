@@ -97,14 +97,16 @@ It could not be determined where this offset comes from.
 \end{wrapfigure}
 
 Figure \ref{fig:horizontal_vertical_error} shows the horizontal errors on the left and the vertical errors on the right.
-The vertical error of standard GPS is about in the range it could be expected with an RMS error of 11.75 meters.
+The vertical error of standard GPS also has an offset but is still in the range of the GPS Performance Standard \cite{SPS_Performance} of 15 meter 95th percentile.
+The vertical RMS error is 11.75 meters.
 The horizontal error of standard GPS on the other hand has an RMS error of 45.46 meters.
 This is much more than the 10 meter 95th percentile specified in the GPS Performance Stardard.
 
-It is evident that DGPS did not improve those errors distinctly.
+DGPS did not improve those errors distinctly.
 Its horizontal error is a bit worse with 49.29 meters RMS and the vertical error a bit better with 8.75 meters RMS than standard GPS.
-So there was a small improvement in the vertical error which is the important part of the rocket position for the control.
-But it is still far off the 1 meter RMS error defined in the requirements.
+There was a small improvement in the vertical RMS error which is the important part of the rocket position for the control.
+But the variance is worse for DGPS in both cases with a variance of 5 meters compared to 1.2 meters for standard GPS in the vertical.
+All measurements are still far off the 1 meter RMS error defined in the requirements.
 
 Figure \ref{fig:prcs_filtered} shows the PRCs that were calculated by the DGPS Message Generator and applied by the DGPS receiver.
 The PRC of 11 GPS satellites were calculated during the test.
@@ -128,7 +130,7 @@ Such PRCs should be excluded from the RTCM stream in the future.
  \label{fig:prcs_filtered}
 \end{figure}
 
-\section{Pending Tests}
+\section{Pending Tests}\label{sec:pending_tests}
 
 This secion lists all the tests that were planned but could not be conducted due to time constraints.
 Because of the results from the satatic accuracy test, it would also not make sense to test the other scenarios.

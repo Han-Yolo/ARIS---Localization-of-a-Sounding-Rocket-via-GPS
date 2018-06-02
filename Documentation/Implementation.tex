@@ -300,6 +300,9 @@ When the thread starts, UBX configuration messages are sent to the GPS receiver 
 The UBX-RXM-RAWX and UBX-NAV-POSECEF messages then come in with a frequency of 1 Hz.
 UBX-RXM-SFRBX is sent when navigation message data is availabel in the GPS receiver.
 
+The reception and conversion to the right data types of all three UBX messages works as expected.
+The integrity of the values has been checked with u-center.
+
 \subsection{Position Averaging}
 
 One option to set the reference position is by measuring is directly with the GPS receiver.
@@ -322,6 +325,9 @@ The first three subframes of the navigation message of a satellite are needed to
 When a subframe is decoded, the values are saved to the appropriate ephemeris struct.
 When an ephemeris struct has the matching information of all three subframes, it is marked as valid.
 A valid ephemeris struct can be fetched by other threads with the public getEphemeris function.
+
+The navigation messages usually update every two hours.
+If the parameters are being extracted correctly has been checked with a comparison to the ephemeris and clock values provided by IGS \cite{IGS}.
 
 \subsection{DGPS Message Generator}
 
@@ -355,6 +361,16 @@ The filter is configured to average over ten values.
 The filtered PRCs along with their satellite ID and IOD are pushed to the ThreadQueue for RTCM message 1.
 The reference position is sent to the ThreadQueue for RTCM message 3 every ten seconds.
 
+A mayor part of the process is the calculation of the current satellite position from the Keplerian elements contained in the ephemeris data.
+It is done according to the algorithm in table 20-IV from the GPS Interface Description \cite{IS-GPS-200}.
+The RTCM 2.3 document \cite{RTCM_2.3} has a test case in appendix C to validate the satellite position calculation.
+The implemented algorithm had a max. error of 1.2 cm in this test case.
+
+A challenge was to get a good estimate of the receiver clock offset.
+The M8T receiver provides the clock offset and drift information with the message UBX-NAV-CLOCK.
+However, this information can not be used because its time reference is not clearly defined.
+With the implemented averaging method over the PRCs, the PRCs can be corrected and are in the range of 10 meters.
+
 \subsection{XBee Interface}
 
 The XBeeInterface therad waits until data arrives over the ThreadQueues for RTCM messge 1 and 3.
@@ -363,6 +379,22 @@ They return the byte stream that can be sent over a serial interface.
 In the final application, this byte stream is sent to an XBee software that handles the communication with the XBee module.
 This has not been implemented yet because the interface to that software is not defined.
 For testing, the XBeeInterface can send the byte stream directly to a serial port where the user GPS receiver can be connected.
+
+The main work was the implementation of the functions in the RTCMEncode header file.
+They convert the PRC data to the format specified in the RTCM 2.3 standard \cite{RTCM_2.3}.
+Two particular properties of the RTCM standard were causing some problems.
+The first was the parity calculation.
+It was specified that is follows the parity algorithm of the GPS navigation message defined in the GPS Interface Specification \cite{IS-GPS-200}.
+There is says that the parity of the previous data word is used to calculate the parity of the current.
+But unlike for GPS navigation massages, in the RTCM 2.3 standard, the parity is also connected over whole messages.
+The second challenge was to map the 30 bit words to 8 bit bytes that can be transmitted over a serial interface.
+This is done using the ``6 of 8'' format.
+First, all bits in a word are flipped so that the MSB becomes the new LSB.
+Then, the 30 bit word is divided into five pats and each 6 bits are placed in a byte with the two MSBs beeing ``01''.
+With those concepts implemented, every second message sent to the M8T receiver is accepted.
+The most probable source of this is a synchronisation problem at the beginning of the RTCM stream, because the there is no previous message for the parity calculation of the first message.
+This problem could not be definitively resolved.
+The fix was to send each message twice so that one is always accepted.
 
 \subsection{Debug}
 
@@ -378,4 +410,11 @@ The debug options are:
  \item Serial output
 \end{itemize}
 Also the logging of the PRCs to a .csv file and the writing of the RTCM output directly to a seria port can be enabled in the Debug header file.
-An example of the debug output when the RTCM messages option is enabled can be seen in figure \ref{}.
+An example of the debug output when the RTCM messages option is enabled can be seen in figure \ref{fig:rtcm_debug}.
+
+\begin{figure}[ht]
+ \centering
+ \includegraphics[width=\textwidth]{images/RTCM_Debug.png}
+ \caption{Debug output for RTCM message 1}
+ \label{fig:rtcm_debug}
+\end{figure}

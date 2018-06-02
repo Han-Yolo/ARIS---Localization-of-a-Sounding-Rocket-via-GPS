@@ -1,0 +1,30 @@
+\ifglsentryexists{ARIS}{}%
+{%
+\gls@defglossaryentry{ARIS}%
+{%
+name={ARIS},%
+sort={ARIS},%
+type={acronym},%
+first={Akademische sdf\glsspace (ARIS)},%
+firstplural={Akademische sdfs\glsspace (ARISs)},%
+text={ARIS},%
+plural={ARISs},%
+description={Akademische sdf},%
+descriptionplural={Akademische sdf\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Akademische sdf},%
+longplural={Akademische sdfs},%
+short={ARIS},%
+shortplural={ARISs},%
+counter={page},%
+parent={},%
+%
+}%
+}%

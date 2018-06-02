@@ -1,6 +1,7 @@
 \chapter{Conclusion}
 
-This final chapter looks back at the project in terms of what has be achieved, how the implemented system can benefit a future ARIS project and what other approaches there are to reach the set goals.
+This final chapter looks back at the project in terms of what has been achieved, how the implemented system can be improved and what still has to be done.
+
 
 \section{Meeting the objectives}
 
@@ -16,7 +17,7 @@ The first and most important requirement is about the accuracy of the system.
 The vertical RMS error of the position estimation for the rocket should be less than 1 meter.
 The current state of the implemented system dose not acieve this.
 The static accuracy test showed a vertical RMS error of 8.75 meters.
-This was slightly better than the standard GPS vertical error of 11.75 meters RMS, but still far off the goal of 1 meter.
+This is slightly better than the measured standard GPS vertical error of 11.75 meters RMS, but DGPS actually increased the vertical variance from 1.2 to 5 meters.
 
 The second requirement stated that the rocket should have a GPS fix max. 2 seconds after burnout.
 DGPS does not pose a problem to achieve this.
@@ -27,13 +28,41 @@ During this project, no ARIS rocket was launched with GPS onboard.
 
 Finally, a requirement was set to limit the upload bandwith to the rocket that the system can use.
 A max. bandwith of 2 kbit/s was defined.
-With the choosen protocol to send the DGPS corrections, only half the max. bandwidth is used when corrections are sent every second, which is plenty.
+With the RTCM debug output of the DGPS Message Generator, a RTCM message 1 size of 80 bytes was measured to transmit the PRCs of 8 satellites.
+A RTCM message 3 is alwasy 30 bytes long.
+If both messages are sent twice every second to compensate for the lost messages at the receiver, a bandwidth of only 880 bit/s is used.
+It would be sufficient to send RTCM message 3 only once a minute and the frequency of RTCM message 1 could also be reduced if neccessary.
+
 
 \section{Future Development}
 
-\section{Different Approaches}
+Although the system does not produce satisfying results yet, the underlying functionality of generating corrections and applying them on a receivers position estimation works.
+If the integrity of the PRCs could be improved, the system would start to improve the GPS accuracy.
+One improvement that could be made to the system is excluding satellites from the PRC calculation if they produce outliners.
+It is possible that this behaviour is connected to the elevation of the satellite.
+If so, satellites could be excluded based on their elevation.
+Another possibility is to estimate the receiver clock offset with a different method.
+An often used method is a Kalman Filter.
 
+If the static accuracy is improved, the pending tests from section \ref{sec:pending_tests} can be conducted to validate the functionality of the system in sounding rocket conditions.
+To do that, the XBee link has to be implemented first.
+The XBee hardware modules have already been built by ARIS.
+What is still needed is the interface to the DGPS Message Generator on one side and the interface to the M8T GPS receiver on the other.
 
 
 \section{Reflection}
 
+It has been an intresting project.
+I have learned a lot about GPS of courese, but with that concepts like satellite orbits, reference frames, atmospheric effects on radio waves and CDMA spread spectrum were introduced. 
+These are all fascinating topics on their own.
+
+That the proof of concept does not improve the accuracy as expected is a bit dissapointing.
+But I think the porject progressed quite far.
+With a bit of improvement of the actual PRC calculation algorithm, the system could start to deliver the expected results.
+
+A big thanks on this point to my Supervisor Prof. Marcel Joss and to Dr. Michael Meindl from the Institute of Geodesy and Photogrammetry at the ETH Z\"urich.
+I would not have come so far without their help and expertise.
+
+The work on project TELL with the other ARIS team members has been a pleasure.
+From the avionics meetings to the test launches and now to see the final rocket.
+Although I am not traveling to the U.S. for the competition, I am very excited to see the rocket perform and I wish them all the best.
