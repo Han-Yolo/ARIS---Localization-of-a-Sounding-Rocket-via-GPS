@@ -11,7 +11,7 @@ The need for such a project originated form ARIS \cite{aris}, the Swiss Space In
 ARIS was founded in 2017 by students from the ETH Z\"urich and HSLU.
 Now, over 50 students from the ETH Z\"urich and the universities of applied sciences in Luzern (HSLU) and Z\"urich (ZHAW) work on its inaugural project which is called TELL.
 The goal of project TELL is to build a sounding rocket to compete in the 2018 Spaceport America Cup in New Mexico.
-More than 100 student teams compete there to launch a 4kg payload with a sounding rocket to a target altitude of 10000 feet or about 3km.
+More than 100 student teams compete there to launch a 4 kg payload with a sounding rocket to a target altitude of 10000 feet or about 3 km.
 
 \noindent
 \begin{minipage}{0.5\textwidth}
@@ -31,10 +31,10 @@ A jury distributes points for achievements in the competition itself and the pla
 A maximum score of 1000 points can be reached.
 The points are distributed as follows:
 \begin{itemize}
- \item Delivery of Entry Form: 60 points - 6\%
- \item Technical Report: 200 points - 20\%
- \item Design Implementation: 240 points - 24\%
- \item Flight Performance: 500 points - 50\%
+ \item Delivery of Entry Form: 60 points - 6 \%
+ \item Technical Report: 200 points - 20 \%
+ \item Design Implementation: 240 points - 24 \%
+ \item Flight Performance: 500 points - 50 \%
 \end{itemize}
 
 Points for flight performance are split between reached apogee relative to the target apogee (350 points) and successful recovery (150 points).
@@ -42,13 +42,13 @@ The points for apogee precision are calculated with this formula:
 $$ Points = 350 - \left( \frac{350}{0.3 \times Apogee_{Target}} \right) \times \abs{Apogee_{Target} - Apogee_{Actual}} $$
 $$ \text{with } Apogee_{Target} = 3048m(10000feet)$$ 
 
-With that equation, a deviation of about 9 meters from the target apogee results in a loss of 1\% (3.5 points) of possible points for a correct apogee. \cite{sac_rules2017}
+With that equation, a deviation of about 9 meters from the target apogee results in a loss of 1 \% (3.5 points) of possible points for a correct apogee. \cite{sac_rules2017}
 
 For project TELL, the rocket motor is dimensioned to overshoot the target apogee and airbrakes are used to reduce the apogee to the target.
 A control loop is implemented to control the position of the airbrakes during the accent.
 The position and velocity data for the loop is fused from on-board pressure and acceleration sensors.
 Although GPS is implemented in the rocket, it is only used to locate and recover the rocket after it landed.
-This is because standalone GPS has a vertical error of less than 15 meters for 95\% of the time. \cite{SPS_Performance}
+This is because standalone GPS has a vertical error of less than 15 meters for 95 \% of the time. \cite{SPS_Performance}
 This is not accurate enough to be beneficial for the sensor fusion.
 A vertical error of less than 1 meter root-mean-square (RMS) would be needed for it to be feasable.
 With such an accuracy improvement, the GPS position could be fused together with the pressure sensor and accelerometer data.
@@ -78,9 +78,9 @@ The other is to make it possible to integrate the system into the rocket in term
 
 The main parameter to rate the performance of a positioning system is the accuracy.
 The accuracy consists of two components, the variance and the bias.
-Two metrics that are used often are the 95th precentile and the root-mean-square error (RMSE).
+Two metrics that are used often are the 95th precentile and the RMS error.
 The accuracy reqirement for the sounding rocket GPS is:
-$$ RMSE \le 1m $$
+$$ Error_{RMS} \le 1m $$
 
 Another metric is the reliability of the system.
 This could be a problem especially during the burn of the rocket because of the high acceleration.
