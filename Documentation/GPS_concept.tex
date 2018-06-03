@@ -5,29 +5,29 @@ The error sources that impact the accuracy of GPS are listed and split into cate
 
 
 \section{Predecessors}
-Before there was a GPS, other radionavigation systems were used.
-They were mostly ground based and limited to a certan area or time.
+Before there was a GPS, other radio navigation systems were used.
+They were mostly ground based and limited to a certain area or time.
 
 One of the early examples is the U.S. system Loran.
 It works with multiple transmission stations at a distance of about 1000km to each other.
 They send out pulse signals in all directions.
 With the difference in time-of-arrival of those pulses, a receiver can triangulate its position.
 This method is one variant of hyperbolic positioning.
-Only a 2D fix can be acieved with such systems.
+Only a 2D fix can be achieved with such systems.
 The height, if needed, has so be determined with a different method.
 The development of Loran-A was started during World War \rom{2}.
 Loran-C is the latest version and still in use today.
 It has an RMS positioning accuracy of about 250 m.
 
 Another hyperbolic positioning system was Omega.
-It was the first global radionavigation system and operational from 1970 to 1997.
-But rather than measuring the time differene of pulses, the phase difference of sinusoidal signals was measured.
-This method resulted in an RMS postitoning accuracy of 2-4 km.
+It was the first global radio navigation system and operational from 1970 to 1997.
+But rather than measuring the time difference of pulses, the phase difference of sinusoidal signals was measured.
+This method resulted in an RMS positioning accuracy of 2-4 km.
 The lower accuracy can be explained with the much greater area it had to cover.
 
 Apart from those ground based systems, there was a working satellite navigation system that came even before Omega.
 It is called Transit and was operational from 1964 to 1996.
-A doppler based systen that was launched by the U.S. Navy.
+A doppler based system that was launched by the U.S. Navy.
 In doppler positioning, a 2D position can be determined from the instant the doppler of the satellite signal changes from high to low and from the sharpness of the change.
 At the moment the doppler changes, the satellite is the closest to the receiver on its orbit.
 The distance from the projected orbit can then be determined by how sharp the doppler changes.
@@ -40,15 +40,15 @@ A range of counterparts from Russia and Europe existed to those U.S. systems.
 Gee was a hyperbolic system from Great Britain similar to Loran.
 It was used by the Royal Air Force during World War \rom{2}.
 Doppler positioning was already used in reverse to determine the orbit of Sputnik \rom{1} from a ground station with a known location.
-The idea to measure the postiton of the receiver on the surface of the earth came from this application.
+The idea to measure the position of the receiver on the surface of the earth came from this application.
 The Soviet Union had two doppler based systems similar to Transit called Parus and Tsikada. \cite{misra2011global}
 
 
 \section{Global Navigation Satellite Systems}
 
-From the knowledege gained from Tansit, a new group of space based navigation systems emerged. 
-The first one beeing the NAVSTAR Global Positioning System (GPS) developed by the U.S. Government.
-The first GPS satellite was launched in 1978 and the system became fully operantional in 1993.
+From the knowledge gained from Tansit, a new group of space based navigation systems emerged. 
+The first one being the NAVSTAR Global Positioning System (GPS) developed by the U.S. Government.
+The first GPS satellite was launched in 1978 and the system became fully operational in 1993.
 To be independent from the U.S. when it comes to navigation and to improve local positioning, other nations started to launch their own systems.
 The generic term for such systems is Global Navigation Satellite Systems (GNSS).
 The first addition to the group was the former Soviet and now Russian system GLONASS.
@@ -71,8 +71,8 @@ It started with just geostationary and geosynchronous satellites over China, but
 \section{GPS}
 
 This section closer explains the system architecture, functional principle and performance of GPS.
-The difference to the ohter GNSS is minor.
-Orbits, frequencys and signal modulation are slightly different between the systems, but the basic architecture is the same.
+The difference to the other GNSS is minor.
+Orbits, frequencies and signal modulation are slightly different between the systems, but the basic architecture is the same.
 
 
 \subsection{System Architecture}
@@ -86,13 +86,13 @@ A full GPS constellation consists of 24 satellites as shown in figure \ref{fig:c
 Currently, there are 31 GPS satellites in operation.
 They are in medium earth orbits at an altitude of about 20'200 km with each satellite circling the earth twice a day.
 About 8 satellites are visible to a user at a time.
-These satellites are constantly beeing replaced by newer ones with new features.
+These satellites are constantly being replaced by newer ones with new features.
 The different generations of satellites are divided into Blocks.
 Starting with the first generation of satellites launched from 1978 until 1995 called Block \rom{1}.
-Block \rom{2} satellites had a series of incremental improvements and added new signals over the time they were launced from 1989 until 2016.
+Block \rom{2} satellites had a series of incremental improvements and added new signals over the time they were launched from 1989 until 2016.
 The separate satellite series of the Block \rom{2} generation were called II, IIA, IIR, IIR-M and IIF.
 The first Block \rom{3} launch is scheduled for 2018.
-The third generation adds even more signals and trinsmitts at higher power levels.
+The third generation adds even more signals and transmits at higher power levels.
 
 \begin{figure}[ht]
  \centering
@@ -107,16 +107,16 @@ To ensure an accurate positioning service for GPS users, the satellites have to 
 This is the job of the Control Segment.
 It monitors satellite orbits and time to predict satellite ephemerides and clock parameters.
 It then updates the satellite navigation data, which is later sent from the satellite to the user.
-If neccesary, the Control Segment can order the satellites to performe maneuvers to maintain a correct orbit or to relocate to another orbit.
+If necessary, the Control Segment can order the satellites to perform maneuvers to maintain a correct orbit or to relocate to another orbit.
 The Control Segment comprises of a network of ground based stations spread arround the globe.
-This network is coordinated by the Master Controll Station in the U.S. state of Colorado.
+This network is coordinated by the Master Control Station in the U.S. state of Colorado.
 
 \subsubsection{User Segment}
 
 The User Segment is where the satellite signals are picked up and the position of the user is estimated.
 Unlike the other segments, the User Segment is not developed by the U.S. Government, apart from military receivers.
 The design of civil GPS receivers is left to the market.
-The size of those receivers droped dramatically during the lifetime of GPS from the size of a backpack, to the size of a single IC.
+The size of those receivers dropped dramatically during the lifetime of GPS from the size of a backpack, to the size of a single IC.
 
 \subsection{Reference Frame}
 
@@ -138,9 +138,9 @@ The Z-axis goes through the north pole and the Y-axis has a right angle to both 
 \subsection{Functional Principle}
 
 GPS works with the principle of trilateration.
-For this method of postitoning, the distance to three known lacations is needed to calculate the own position in three dimensions.
+For this method of positioning, the distance to three known locations is needed to calculate the own position in three dimensions.
 This works with basic vector geometry.
-The euclidean distance between two points in three-dimensional space can be calculated with equation \ref{eq:euclidean_dist}.
+The Euclidean distance between two points in three-dimensional space can be calculated with equation \ref{eq:euclidean_dist}.
 
 \begin{equation}
  r^{(k)} = \sqrt{(x^{(k)} - x)^2 + (y^{(k)} - y)^2 + (z^{(k)} - z)^2} = \lvert\lvert \textbf{x}^{(k)} - \textbf{x} \rvert\rvert		\label{eq:euclidean_dist}
@@ -149,7 +149,7 @@ The euclidean distance between two points in three-dimensional space can be calc
 For GPS, the two points are the user position $[x, y, z]$ and the satellite position $[x^{(k)}, y^{(k)}, z^{(k)}]$ and the true distance between them is called $r^{(k)}$ as shown in figure \ref{fig:triangulation}.
 The satellites are distinguished with the superscript $^{(k)}$ where k stands for the k-th satellite in view.
 In theory, with the position and distance of three satellites, a system of equations could be solved for the three variables of the user position $[x, y, z]$.
-But in practice, a gps receiver needs at least four satellites to estimate its position.
+But in practice, a GPS receiver needs at least four satellites to estimate its position.
 This is because a fourth variable needs to be estimated called $\delta t_u$.
 This is the difference between GPS time and receiver time.
 
@@ -161,9 +161,9 @@ This is the difference between GPS time and receiver time.
 \end{figure}
 
 GPS uses the propagation time of radio waves to determine the distance between satellite and user.
-The measured transmision time is multiplied by the speed of light to get the distance in meters.
+The measured transmission time is multiplied by the speed of light to get the distance in meters.
 This is not the true distance $r^{(k)}$.
-Insted, the so called pseudorange $\rho^{(k)}$ is measured, which contains the true range and a set of errors.
+Instead, the so called pseudorange $\rho^{(k)}$ is measured, which contains the true range and a set of errors.
 The relation is shown in equation \ref{eq:pseudorange}.
 The pseudorange contains the clock errors $c[\delta t_u - \delta t^{(k)}]$ and the atmospheric errors $I^{(k)} + T^{(k)}$.
 Those errors can be modeled and estimated to correct the pseudorange.
@@ -176,9 +176,9 @@ What these errors mean is closer explained in section \ref{sec:error_sources}.
 
 Important here is the user clock error $\delta t_u$.
 The reason for this error is the inaccurate clock in the receiver.
-The satellites have atomic clocks which are synchorinized to GPS time.
-It is not feasable to build an atomic clocks into every receiver and keep it synchorinized to GPS time.
-Insted, the difference between receiver time and GPS time is estimatet with the measurement of a fourth satellite.
+The satellites have atomic clocks which are synchronized to GPS time.
+It is not feasible to build an atomic clocks into every receiver and keep it synchronized to GPS time.
+Instead, the difference between receiver time and GPS time is estimated with the measurement of a fourth satellite.
 This is possible because the user clock error is common in the pseudoranges from all satellites.
 The estimation of the four variables $[x, y, z, \delta t_u]$ is either done iteratively with the Least Square method or with a Kalman Filter.
 
@@ -206,12 +206,12 @@ They are first XORed together and then modulated onto the carrier using Binary P
 This process of XORing is equal to the spreading of the spectrum with the pseudorandom C/A-code sequence.
 
 The C/A-code is a sequence of 1023 bits, which repeats every millisecond and is unique to each satellite.
-The lenght of each bit, or chip in this context, is about 1 $\mu s$.
+The length of each bit, or chip in this context, is about 1 $\mu s$.
 Besides the spreading and despreading of the spectrum, this code is used to measure the signal transmission time.
 The received signal is demodulated and correlated with local copies of the C/A-codes on separate channels.
 The local copy is shifted in time until an autocorrelation peak emerges.
 
-The actual data transmitted with only 50bit/s is the navigation message.
+The actual data transmitted with only 50 bit/s is the navigation message.
 It contains information about the satellites time, orbit, clock correction and ionospheric correction.
 The obit data is called ephemeris.
 With it, the position of the satellite can be calculated.
@@ -227,8 +227,8 @@ This was already addressed in section \ref{sec:requirements}, where the requirem
 Accuracy can be explained with the two errors variance and bias.
 In GPS, the two errors are often not given separately when the accuracy of the whole system is described.
 Accuracy simply describes how close the measurement matches the real position.
-The two most used metrics to describe GPS postitoning accuracy are the 95th precentile and the RMS error.
-The 95th precentile describes the value in meters, where 95 \% of errors are smaller and 5 \% are larger.
+The two most used metrics to describe GPS positioning accuracy are the 95th percentile and the RMS error.
+The 95th percentile describes the value in meters, where 95 \% of errors are smaller and 5 \% are larger.
 The RMS error equals the variance of 1 $\sigma$, as long as the mean error is zero.
 A mean error is a bias, that is considered in the RMS error but does not impact the variance.
 The RMS error is calculated with:
@@ -252,20 +252,20 @@ This is done with satellite self-monitoring, cross-monitoring between satellites
 
 The amount of error in the GPS position is determined by two Factors.
 The reason there is a position error at all is the unmodeled error in the pseudoranges called User Range Error (URE).
-This error is further divided into three groups of errors depending on where they occure.
+This error is further divided into three groups of errors depending on where they occur.
 Errors in the satellites state are called satellite errors.
-Errors that occure in the signal path from the satellite to the receiver are called atmospheric errors.
-Finally, errors that are caused by unprecise measurenents of the signals by the receiver are called measurement errors.
+Errors that occur in the signal path from the satellite to the receiver are called atmospheric errors.
+Finally, errors that are caused by unprecise measurements of the signals by the receiver are called measurement errors.
 All three types are discussed later in this section.
 
 The other factor is the satellite geometry.
 It determines how much the URE impacts the position accuracy.
-An optimal geometry would be stellites evenly distributed in all three dimensions.
+An optimal geometry would be satellites evenly distributed in all three dimensions.
 This is not possible because a receiver on the surface of the earth can not receive signals from satellites blocked by the earth.
 A metric to determine the geometry quality is the Dilution of Precision (DOP).
 Different versions of DOP can be determined like the Horizontal DOP (HDOP), Vertical DOP (VDOP), 3-D Position DOP (PDOP) and Time DOP (TDOP).
 The RMS position error can then be calculated with the standard deviation of the URE $\sigma_{URE}$ multiplied with the corresponding DOP.
-For example, the horizontal RMS position error can be calcuated with:
+For example, the horizontal RMS position error can be calculated with:
 \begin{equation}
  Horizontal \text{ } Error_{RMS} = \sigma_{URE} \cdot HDOP
 \end{equation}
@@ -279,9 +279,9 @@ For example, the horizontal RMS position error can be calcuated with:
   The difference between the estimated position and the real satellite position is called ephemeris error.
   
   The other satellite error comes from an inaccurate satellite clock.
-  Although GPS satellites have atomic clocks, they can never be perfectly alligned with GPS time.
-  That is why the control segment also estimates a clock offset for each satellit, which is also broadcasted with the navigation message.
-  This correction apperars in the pseudorange equation \ref{eq:pseudorange} as $\delta t^{(k)}$.
+  Although GPS satellites have atomic clocks, they can never be perfectly aligned with GPS time.
+  That is why the control segment also estimates a clock offset for each satellite, which is also broadcasted with the navigation message.
+  This correction appears in the pseudorange equation \ref{eq:pseudorange} as $\delta t^{(k)}$.
   
   The remaining satellite errors after the pseudorange correction are the errors in the ephemeris estimation and satellite clock offset estimation.
   They are determined by how accurate the control segment can determine the position and time of each satellite.
@@ -305,10 +305,10 @@ For example, the horizontal RMS position error can be calcuated with:
   The first one is the ionosphere between about 50 km and 1000 km.
   It consists of ionized gases.
   The intensity of the ionization depends mainly on the sun's activity and the day/night cycle.
-  The ammount of ionization determines the delay added to the transmision time by the ionosphere.
+  The amount of ionization determines the delay added to the transmission time by the ionosphere.
   The zenith delay in meters varies from 1 m up to 36 m. 
   It can increase by a factor of 3 with a lower elevation of the satellite.
-  The ionosphereic delay can be modeled to a certain extent with the current space weather and appers in the pseudorange equation \ref{eq:pseudorange} as $I^{(k)}$.
+  The ionosphereic delay can be modeled to a certain extent with the current space weather and appears in the pseudorange equation \ref{eq:pseudorange} as $I^{(k)}$.
 \end{minipage}
 \hfill
 \begin{minipage}{0.38\textwidth}
@@ -320,7 +320,7 @@ The other important layer is the troposphere.
 It is the lowest part of the atmosphere and extends from the ground to about 9-16 km depending on the latitude.
 The troposphere contains three-quarters of the gaseous mass and all of the water vapor of the atmosphere.
 This matter slows the signal down and results in a zenith delay of 2.3-2.6 m at sea level.
-With a lower elevation of the satellite, the delay can increas by a factor of 10.
+With a lower elevation of the satellite, the delay can increase by a factor of 10.
 It can be modeled with the atmospheric humidity and pressure, and is fairly stable because the biggest influence has the gaseous mass, which does not change much over time.
 The term for tropospheric delay in the pesudorange equation \ref{eq:pseudorange} is $T^{(k)}$.
 
@@ -328,7 +328,7 @@ The term for tropospheric delay in the pesudorange equation \ref{eq:pseudorange}
 
 Unlike the previous errors, measurement errors depend on factors like signal power, code structure and receiver design.
 Multipath is a problem most wireless communication systems have.
-The signal is refelcted by surfaces and arrives at the receiver miltiple times at different times.
+The signal is reflected by surfaces and arrives at the receiver multiple times at different times.
 Normally, there is a main signal from the line-of-sight path, and weaker, delayed versions of the signal.
 The influence on the measured range depends on the strength and delay of the reflected signal.
 

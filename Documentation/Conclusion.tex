@@ -5,40 +5,40 @@ This final chapter looks back at the project in terms of what has been achieved,
 
 \section{Meeting the objectives}
 
-The assignment for for this project was to evaluate errors that impact the accuracy of GPS positioning and find ways to mitigate them.
-The most promising approach should be implementet to show its feasability.
+The assignment for this project was to evaluate errors that impact the accuracy of GPS positioning on a sounding rocket and find ways to mitigate them.
+The most promising approach should be implemented to show its feasibility.
 Three groups of errors were found that contain errors in the satellite state, atmospheric modelling and signal reception.
 From the three evaluated error correction methods, differential GPS emerged to be the most effective and most suited to implement on a sounding rocket.
-A DGPS system was planned to implement on a ARIS sounding rocket and the key component that generates the corrections was developed.
+A DGPS system was planned to implement on an ARIS sounding rocket and the key component that generates the corrections was developed.
 The system was successful at generating correction messages that the user receiver can understand and apply.
 
-Requirements were set in the beginning to specify concrete values by which the success of the project can be deteremined.
+Requirements were set in the beginning to specify values by which the success of the project can be determined.
 The first and most important requirement is about the accuracy of the system.
 The vertical RMS error of the position estimation for the rocket should be less than 1 meter.
-The current state of the implemented system dose not acieve this.
+The current state of the implemented system does not achieve this.
 The static accuracy test showed a vertical RMS error of 8.75 meters.
 This is slightly better than the measured standard GPS vertical error of 11.75 meters RMS, but DGPS actually increased the vertical variance from 1.2 to 5 meters.
 
 The second requirement stated that the rocket should have a GPS fix max. 2 seconds after burnout.
 DGPS does not pose a problem to achieve this.
-It depends on the choosen GPS receiver.
-According to the datasheet, the receiver could loose the fix during burn but should be able to get a fix again within 2 seconds.
+It depends on the chosen GPS receiver.
+According to the datasheet, the receiver could lose the fix during burn but should be able to get a fix again within 2 seconds.
 Only a test can definitively determine if this requirement can be fulfilled.
 During this project, no ARIS rocket was launched with GPS onboard.
 
-Finally, a requirement was set to limit the upload bandwith to the rocket that the system can use.
-A max. bandwith of 2 kbit/s was defined.
-With the RTCM debug output of the DGPS Message Generator, a RTCM message 1 size of 80 bytes was measured to transmit the PRCs of 8 satellites.
-A RTCM message 3 is alwasy 30 bytes long.
+Finally, a requirement was set to limit the upload bandwidth to the rocket that the system can use.
+A max. bandwidth of 2 kbit/s was defined.
+With the RTCM debug output of the DGPS Message Generator, an RTCM message 1 size of 80 bytes was measured to transmit the PRCs of 8 satellites.
+An RTCM message 3 is always 30 bytes long.
 If both messages are sent twice every second to compensate for the lost messages at the receiver, a bandwidth of only 880 bit/s is used.
-It would be sufficient to send RTCM message 3 only once a minute and the frequency of RTCM message 1 could also be reduced if neccessary.
+It would be sufficient to send RTCM message 3 only once a minute and the frequency of RTCM message 1 could also be reduced if necessary.
 
 
 \section{Future Development}
 
 Although the system does not produce satisfying results yet, the underlying functionality of generating corrections and applying them on a receivers position estimation works.
 If the integrity of the PRCs could be improved, the system would start to improve the GPS accuracy.
-One improvement that could be made to the system is excluding satellites from the PRC calculation if they produce outliners.
+One improvement that could be made to the system is excluding satellites from the PRC calculation if they produce outliers.
 It is possible that this behaviour is connected to the elevation of the satellite.
 If so, satellites could be excluded based on their elevation.
 Another possibility is to estimate the receiver clock offset with a different method.
@@ -52,17 +52,17 @@ What is still needed is the interface to the DGPS Message Generator on one side 
 
 \section{Reflection}
 
-It has been an intresting project.
-I have learned a lot about GPS of courese, but with that concepts like satellite orbits, reference frames, atmospheric effects on radio waves and CDMA spread spectrum were introduced. 
+It has been a very interesting project.
+I have learned a lot about GPS of course, but with that concepts like satellite orbits, reference frames, atmospheric effects on radio waves and CDMA spread spectrum were introduced. 
 These are all fascinating topics on their own.
 
-That the proof of concept does not improve the accuracy as expected is a bit dissapointing.
-But I think the porject progressed quite far.
+That the proof of concept does not improve the accuracy as expected is a bit disappointing.
+But I think the project progressed quite far.
 With a bit of improvement of the actual PRC calculation algorithm, the system could start to deliver the expected results.
 
-A big thanks on this point to my Supervisor Prof. Marcel Joss and to Dr. Michael Meindl from the Institute of Geodesy and Photogrammetry at the ETH Z\"urich.
+A big thanks to my supervisor Prof. Marcel Joss and to Dr. Michael Meindl from the Institute of Geodesy and Photogrammetry at the ETH Z\"urich.
 I would not have come so far without their help and expertise.
 
 The work on project TELL with the other ARIS team members has been a pleasure.
-From the avionics meetings to the test launches and now to see the final rocket.
+From the avionics meetings to the test launches and now to see the final rockets.
 Although I am not traveling to the U.S. for the competition, I am very excited to see the rocket perform and I wish them all the best.
