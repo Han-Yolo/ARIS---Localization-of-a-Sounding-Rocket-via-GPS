@@ -224,13 +224,13 @@ The transmitted GPS time with the current bit location in the navigation message
 To evaluate the performance of GPS, a number of metrics can be used.
 The most prominent one is of course the accuracy.
 This was already addressed in section \ref{sec:requirements}, where the requirements were defined.
-Accuracy can be explained with the two errors variance and bias.
+Accuracy can be explained with the two errors standard deviation and bias.
 In GPS, the two errors are often not given separately when the accuracy of the whole system is described.
 Accuracy simply describes how close the measurement matches the real position.
 The two most used metrics to describe GPS positioning accuracy are the 95th percentile and the RMS error.
 The 95th percentile describes the value in meters, where 95 \% of errors are smaller and 5 \% are larger.
-The RMS error equals the variance of 1 $\sigma$, as long as the mean error is zero.
-A mean error is a bias, that is considered in the RMS error but does not impact the variance.
+The RMS error equals the standard deviation of 1 $\sigma$, as long as the mean error is zero.
+A mean error is a bias, that is considered in the RMS error but does not impact the standard deviation.
 The RMS error is calculated with:
 \begin{equation}
  Error_{RMS} = \sqrt{\frac{\sum\limits_{i=1}^n \lvert\lvert \textbf{x}_{real} - \textbf{x}_{meas} \rvert\rvert^2}{n}}
