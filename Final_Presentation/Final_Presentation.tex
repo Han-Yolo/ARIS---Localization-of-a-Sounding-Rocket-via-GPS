@@ -26,32 +26,188 @@
 \section{Assignment}
 
 \begin{frame}{Assignment}
- 
+ \begin{itemize}
+  \setlength\itemsep{0.5cm}
+  \item Evaluate GPS positioning for a sounding rocket
+  \item Determine external and internal error sources
+  \item Find error mitigation methods
+  \item Demonstrate feasibility of one method
+ \end{itemize}
+\end{frame}
+
+\begin{frame}{Requirements}
+ \begin{itemize}
+  \setlength\itemsep{0.5cm}
+  \item Vertical RMS error $\le$ 1 meter
+  \item GPS fix max. 2 seconds after burnout
+  \item Uplink data rate max. 2 kbit/s
+ \end{itemize}
 \end{frame}
 
 
 \section{GPS Concept for a Sounding Rocket}
 
 \begin{frame}{Special Conditions}
+ \begin{columns}
  
+  \column{0.7\textwidth}
+  \begin{itemize}
+   \setlength\itemsep{0.5cm}
+   \item 10 g acceleration
+   \item Signal fading due to rotation
+   \item Telemetry transmitter interference
+  \end{itemize}
+  
+  \column{0.3\textwidth}
+  \begin{figure}
+   \includegraphics[width=\textwidth]{images/Mestral_Launch.png}
+  \end{figure}
+ 
+ \end{columns}
 \end{frame}
 
 \begin{frame}{Accuracy Enhancement Method Selection}
- 
+ \begin{columns}
+  
+  \column{0.5\textwidth}
+  \begin{itemize}
+   \setlength\itemsep{0.5cm}
+   \item Dual Frequency Measurements
+   \item Carrier-Phase Measurements
+   \item Differential GPS
+  \end{itemize}
+  
+  \column{0.5\textwidth}
+  \begin{figure}
+   \includegraphics[width=\textwidth]{images/Carrier_Phase_Measurement.png}
+   
+   \includegraphics[height=4cm]{images/Differential_GPS.png}
+  \end{figure}
+  
+ \end{columns}
 \end{frame}
 
 \begin{frame}{DGPS Concept}
- 
+ \begin{columns}
+  
+  \column{0.6\textwidth}
+  \begin{itemize}
+   \setlength\itemsep{0.5cm}
+   \item Self-generated pseudorange corrections
+   \item Reference station at ground station
+   \item Correction transmission over RF telemetry link
+   \item Applycation of corrections by COTS GPS receiver
+  \end{itemize}
+  
+  \column{0.4\textwidth}
+  \begin{figure}
+   \includegraphics[width=\textwidth]{images/DGPS_Rocket_Concept.png}
+  \end{figure}
+  
+ \end{columns}
 \end{frame}
 
 
 \section{TELL Framework}
 
-\section{System Overview}
+\begin{frame}{TELL Rocket}
+ \begin{figure}
+  \includegraphics[width=\textwidth]{images/TELL_Structure.png}
+ \end{figure}
+\end{frame}
 
-\section{DGPS Message Generator}
+\begin{frame}{TELL Avionics}
+ \begin{columns}
+  
+  \column{0.6\textwidth}
+  \begin{itemize}
+   \setlength\itemsep{0.5cm}
+   \item Nose cone and lower body avionics
+   \item Sensor data logging
+   \item Telemetry downlink
+   \item 2 GPS receivers
+   \item Air brake control
+  \end{itemize}
+  
+  \column{0.4\textwidth}
+  \begin{figure}
+   \centering
+   \includegraphics[width=\textwidth]{images/Avionics.png}
+  \end{figure}
+  
+ \end{columns}
+\end{frame}
+
+\begin{frame}{TELL Ground Station}
+ \begin{itemize}
+  \setlength\itemsep{0.5cm}
+  \item Laptop as the central device
+  \item Telemetry receiver with directional antenna
+  \item GPS receiver for post-prcessing DGPS reference station
+ \end{itemize}
+\end{frame}
+
+
+\section{Implementation}
+
+\begin{frame}{Top Level Data Flow}
+ \begin{figure}
+  \includegraphics[width=\textwidth]{images/DGPS_System_Overview.png}
+ \end{figure}
+\end{frame}
+
+\begin{frame}{GPS Receiver}
+ \begin{columns}
+  
+  \column{0.6\textwidth}
+  \begin{itemize}
+   \setlength\itemsep{0.5cm}
+   \item u-blox M8T receiver
+   \item outputs GPS raw data
+   \item can receive and apply RTCM 2.3 messages
+  \end{itemize}
+  
+  \column{0.4\textwidth}
+  \begin{figure}
+   \centering
+   \includegraphics[width=\textwidth]{images/M8T_Receiver_Board.jpg}
+  \end{figure}
+  
+ \end{columns}
+\end{frame}
+
+\begin{frame}{DGPS Message Generator Software Architecture}
+ \begin{figure}
+  \includegraphics[width=\textwidth]{images/Software_Architecture.png}
+ \end{figure}
+\end{frame}
+
+\begin{frame}{DGPS Message Generator Data Flow}
+ \begin{figure}
+  \includegraphics[width=\textwidth]{images/Data_Flow.png}
+ \end{figure}
+\end{frame}
 
 \section{Testing}
+
+\begin{frame}{Static Test on the Sonnenberg}
+ \begin{figure}
+  \includegraphics[width=\textwidth]{images/measurement_kriens_setup.png}
+ \end{figure}
+\end{frame}
+
+\begin{frame}{Receiver Setup}
+ \begin{figure}
+  \includegraphics[width=\textwidth]{images/measurement_kriens_receiver.jpg}
+ \end{figure}
+\end{frame}
+
+\begin{frame}{Sonnenberg Test Results}
+ \begin{figure}
+  
+ \end{figure}
+\end{frame}
+
 
 \section{Conclusion}
 
