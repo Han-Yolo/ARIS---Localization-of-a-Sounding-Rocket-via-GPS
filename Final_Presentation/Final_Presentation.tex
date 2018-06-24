@@ -211,7 +211,7 @@
   \centering
   \scriptsize
   \begin{tabular}{l|ll}
-			    & GPS   & DGPS  \\ \hline
+			     & GPS   & DGPS  \\ \hline
   RMS Error 2D {[}m{]}       & 2.323 & 5.490 \\
   RMS Error Vertical {[}m{]} & 5.252 & 4.686 \\
   Bias 2D {[}m{]}            & 1.934 & 5.012 \\
@@ -248,7 +248,30 @@
 \section{Conclusion}
 
 \begin{frame}{Conclusion}
- 
+  \begin{itemize}
+    \setlength\itemsep{0.5cm}
+    \item System is able to generate corrections which can be integraten in the user GPS position.
+    \item Corrections do not improve GPS accuracy with the current algorithm
+  \end{itemize}
+  
+  \begin{table}[]
+    \begin{tabular}{l|l}
+      Requirements                         & Fulfilled    \\ \hline
+      $Error_{RMS} \le 1m$                 & no           \\
+      GPS fix max. 2 seconds after burnout & to be tested \\
+      Uplink data rate max. 2 kbit/s       & yes         
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+\begin{frame}{Future Developement}
+   \begin{itemize}
+   \setlength\itemsep{0.5cm}
+   \item Improve pseudorange correction calculation
+   \item Implement interfaces to XBee modules
+   \item Conduct pending tests
+   \item Integrate into rocket infrastructure
+  \end{itemize}
 \end{frame}
 
 

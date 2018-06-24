@@ -1,0 +1,14 @@
+# Overview
+This program generates differential GPS correction messages from a u-blox M8T GPS receiver. 
+It is a Qt project that was created with Qt Creator 4.6.0 and Qt version 5.10.1 on Linux Mint.
+
+# Function
+The receiver is connected to the laptop over USB. 
+A serial port is used to communicate with the receiver.
+The correction messages follow the RTCM 2.3 standard. 
+Message 1 and 3 are generated.
+They are then sent to the XBee ground station interface from where they are transmitted to the rocket.
+
+# ToDo
+* improve pseudorange corrections (receiver clock offset estimation)
+* implement XBee interface when it is defined from the ground station side (messages can be sent out over a serial port at the moment)
